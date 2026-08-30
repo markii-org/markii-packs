@@ -1,0 +1,26 @@
+{
+  "name": "blog",
+  "engine": "react",
+  "components": {
+    "header": {
+      "source": "./header.tsx",
+      "description": "A post masthead: large title, muted subtitle, and an author/date meta line.",
+      "kind": "leaf"
+    },
+    "byline": {
+      "source": "./byline.tsx",
+      "description": "A compact one-line author strip with a generated monogram.",
+      "kind": "leaf"
+    },
+    "pullquote": {
+      "source": "./pullquote.tsx",
+      "description": "A large-type excerpt set off from the body, with an optional cite line.",
+      "kind": "container"
+    },
+    "aside": {
+      "source": "./aside.tsx",
+      "description": "A footnote-style side note, smaller type with a subtle left rule.",
+      "kind": "container"
+    }
+  }
+}

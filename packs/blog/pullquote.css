@@ -1,0 +1,49 @@
+/*
+ * `:::blog_pullquote` — a large-type excerpt set off from the body by a
+ * left rule and an oversized quote mark. The mark is a pseudo-element so
+ * no image or extra markup is needed.
+ */
+
+.mk-blog_pullquote {
+  margin: 0;
+  padding: 0.2rem 0 0.2rem 1.15rem;
+  border-left: 3px solid var(--mk-accent);
+}
+
+.mk-blog_pullquote__quote {
+  position: relative;
+  margin: 0;
+  padding-left: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--mk-fg);
+}
+
+.mk-blog_pullquote__quote::before {
+  content: '\201C';
+  position: absolute;
+  left: -0.1rem;
+  top: -0.35rem;
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--mk-accent) 55%, var(--mk-faint));
+}
+
+.mk-blog_pullquote__quote > :first-child {
+  margin-top: 0;
+}
+
+.mk-blog_pullquote__quote > :last-child {
+  margin-bottom: 0;
+}
+
+.mk-blog_pullquote__cite {
+  margin: 0.5rem 0 0 1.6rem;
+  font-size: 0.85rem;
+  color: var(--mk-muted);
+}
+
+.mk-blog_pullquote__cite::before {
+  content: '\2014 ';
+}

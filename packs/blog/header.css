@@ -1,0 +1,44 @@
+/*
+ * `::blog_header` — a post masthead. No outer margin: the document
+ * stylesheet owns vertical rhythm between blocks. Colors come only from
+ * the `--mk-*` tokens (docs/integration.md).
+ */
+
+.mk-blog_header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.mk-blog_header__title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--mk-fg);
+}
+
+.mk-blog_header__subtitle {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--mk-muted);
+}
+
+.mk-blog_header__meta {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--mk-muted);
+}
+
+.mk-blog_header__author {
+  font-weight: 600;
+}
+
+.mk-blog_header__sep {
+  color: var(--mk-faint);
+}
+
+.mk-blog_header__date {
+  font-variant-numeric: tabular-nums;
+}

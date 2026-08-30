@@ -1,0 +1,21 @@
+{
+  "name": "fin",
+  "engine": "react",
+  "components": {
+    "ticker": {
+      "source": "./ticker.tsx",
+      "description": "Horizontal strip of quote chips: symbol, price, and signed change.",
+      "kind": "leaf"
+    },
+    "holdings": {
+      "source": "./holdings.tsx",
+      "description": "Portfolio table with computed market value per position and a total row.",
+      "kind": "leaf"
+    },
+    "allocation": {
+      "source": "./allocation.tsx",
+      "description": "SVG donut chart with a legend, for a set of labeled shares.",
+      "kind": "leaf"
+    }
+  }
+}

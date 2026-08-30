@@ -1,0 +1,54 @@
+.mk-fin_holdings {
+  overflow-x: auto;
+  border: 1px solid var(--mk-border);
+  border-radius: 8px;
+}
+
+.mk-fin_holdings__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.mk-fin_holdings__table thead th {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--mk-border);
+  background: var(--mk-surface-strong);
+  color: var(--mk-muted);
+  font-weight: 600;
+  text-align: left;
+}
+
+.mk-fin_holdings__table tbody td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--mk-border);
+  color: var(--mk-fg);
+}
+
+.mk-fin_holdings__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.mk-fin_holdings__table tbody tr:nth-child(even) td {
+  background: var(--mk-surface);
+}
+
+.mk-fin_holdings__col-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.mk-fin_holdings__total td {
+  padding: 0.5rem 0.75rem;
+  border-top: 2px solid var(--mk-border);
+  font-weight: 700;
+  color: var(--mk-fg);
+}
+
+.mk-fin_holdings--stale {
+  opacity: 0.7;
+}
+
+.mk-fin_holdings--error {
+  opacity: 0.4;
+}

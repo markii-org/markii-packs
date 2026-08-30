@@ -1,0 +1,60 @@
+/*
+ * `::blog_byline` — a compact author strip. The monogram is a plain CSS
+ * circle, colored from the accent token so it reads consistently across
+ * themes without needing an image.
+ */
+
+.mk-blog_byline {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--mk-muted);
+}
+
+.mk-blog_byline__monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mk-accent) 16%, var(--mk-bg));
+  color: var(--mk-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mk-blog_byline__text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.mk-blog_byline__author {
+  font-weight: 600;
+  color: var(--mk-fg);
+}
+
+.mk-blog_byline__role {
+  color: var(--mk-muted);
+}
+
+.mk-blog_byline__role::before {
+  content: '· ';
+  color: var(--mk-faint);
+}
+
+.mk-blog_byline__date {
+  color: var(--mk-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.mk-blog_byline__date::before {
+  content: '· ';
+  color: var(--mk-faint);
+}

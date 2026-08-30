@@ -1,0 +1,32 @@
+/*
+ * `:::blog_aside` — a footnote-style side note. Deliberately quieter than
+ * the stdlib callout: no icon, no background fill, just a subtle left
+ * rule and smaller type, so it reads as marginal commentary rather than
+ * an alert.
+ */
+
+.mk-blog_aside {
+  margin: 0;
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  border-left: 2px solid var(--mk-border);
+  font-size: 0.9rem;
+  color: var(--mk-muted);
+}
+
+.mk-blog_aside__label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mk-faint);
+}
+
+.mk-blog_aside__body > :first-child {
+  margin-top: 0;
+}
+
+.mk-blog_aside__body > :last-child {
+  margin-bottom: 0;
+}

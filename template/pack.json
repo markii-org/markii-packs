@@ -1,0 +1,11 @@
+{
+  "name": "template",
+  "engine": "react",
+  "components": {
+    "hello": {
+      "source": "./hello.tsx",
+      "description": "A greeting box for a given name.",
+      "kind": "leaf"
+    }
+  }
+}

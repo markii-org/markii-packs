@@ -1,0 +1,26 @@
+{
+  "name": "track",
+  "engine": "react",
+  "components": {
+    "streak": {
+      "source": "./streak.tsx",
+      "description": "A GitHub-style calendar grid of done days for a habit streak.",
+      "kind": "leaf"
+    },
+    "ring": {
+      "source": "./ring.tsx",
+      "description": "A hand-rolled SVG progress ring for a single value against a max.",
+      "kind": "leaf"
+    },
+    "habits": {
+      "source": "./habits.tsx",
+      "description": "A compact grid of habits by day, checked off per day.",
+      "kind": "leaf"
+    },
+    "log": {
+      "source": "./log.tsx",
+      "description": "A minimal table of dated log entries with an optional numeric value.",
+      "kind": "leaf"
+    }
+  }
+}

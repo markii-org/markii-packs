@@ -1,0 +1,19 @@
+/*
+ * `::template_hello` — a minimal greeting box. Colors come from the
+ * `--mk-*` theme tokens (docs/integration.md in the main repo) so the box
+ * reads correctly in every host theme.
+ */
+
+.mk-template_hello {
+  display: inline-block;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--mk-border);
+  border-radius: 8px;
+  background: var(--mk-surface);
+  color: var(--mk-fg);
+}
+
+.mk-template_hello__name {
+  font-weight: 600;
+  color: var(--mk-accent);
+}

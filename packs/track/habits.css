@@ -1,0 +1,61 @@
+/*
+ * `::track_habits` — a compact habit-by-day grid. Colors come from
+ * `--mk-*` tokens throughout.
+ */
+
+.mk-track_habits {
+  margin: 0;
+  overflow-x: auto;
+}
+
+.mk-track_habits__empty {
+  font-size: 0.85rem;
+  color: var(--mk-faint);
+}
+
+.mk-track_habits__table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.mk-track_habits__name-head,
+.mk-track_habits__day-head {
+  font-weight: 600;
+  color: var(--mk-muted);
+  text-align: center;
+  padding: 0.2rem 0.4rem;
+}
+
+.mk-track_habits__name {
+  text-align: left;
+  font-weight: 500;
+  color: var(--mk-fg);
+  padding: 0.2rem 0.6rem 0.2rem 0;
+  white-space: nowrap;
+}
+
+.mk-track_habits__cell {
+  text-align: center;
+  padding: 0.15rem;
+  border-top: 1px solid var(--mk-border);
+}
+
+.mk-track_habits__check {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--mk-faint) 35%, var(--mk-surface));
+}
+
+.mk-track_habits__check--done {
+  background: var(--mk-accent);
+}
+
+.mk-track_habits--stale {
+  opacity: 0.7;
+}
+
+.mk-track_habits--error {
+  opacity: 0.4;
+}

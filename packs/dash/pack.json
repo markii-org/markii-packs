@@ -1,0 +1,31 @@
+{
+  "name": "dash",
+  "engine": "react",
+  "components": {
+    "sparkline": {
+      "source": "./sparkline.tsx",
+      "description": "Inline SVG trend line for a bound series of numbers, auto-scaled with an optional last-value label.",
+      "kind": "leaf"
+    },
+    "gauge": {
+      "source": "./gauge.tsx",
+      "description": "Semi-circular arc gauge for a single value against a min/max range.",
+      "kind": "leaf"
+    },
+    "status": {
+      "source": "./status.tsx",
+      "description": "A colored status dot next to a label: ok, warn, or down.",
+      "kind": "inline"
+    },
+    "uptime": {
+      "source": "./uptime.tsx",
+      "description": "Segmented bar showing a history of ok/warn/down states, oldest first.",
+      "kind": "leaf"
+    },
+    "delta": {
+      "source": "./delta.tsx",
+      "description": "An up or down triangle with a formatted change value.",
+      "kind": "inline"
+    }
+  }
+}
