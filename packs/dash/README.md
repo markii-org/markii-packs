@@ -18,6 +18,7 @@ name, the written attribute wins. That matches `@markii/react`'s own
 being written.
 
 ## `dash_sparkline`
+<img width="1088" height="403" alt="image" src="https://github.com/user-attachments/assets/2151346a-804c-4642-99e2-55704c8a7987" />
 
 ```markdown
 ::dash_sparkline{data=metric label="CPU"}
@@ -37,6 +38,8 @@ on the mid-line. At most 120 points are drawn.
 ```
 
 ## `dash_gauge`
+
+<img width="1088" height="403" alt="image" src="https://github.com/user-attachments/assets/0a824077-e520-4a5b-9b61-77dcda092230" />
 
 ```markdown
 ::dash_gauge{data=cpu min=0 max=100 label="CPU" unit="%"}
@@ -59,6 +62,7 @@ measure, draws an empty arc rather than a misleading full one.
 ```
 
 ## `dash_status`
+<img width="1088" height="403" alt="image" src="https://github.com/user-attachments/assets/2b64a0af-dedb-4400-9f62-26bd9bf41d4e" />
 
 ```markdown
 :dash_status[api server]{state=ok}
@@ -80,6 +84,8 @@ tooltip.
 
 ## `dash_uptime`
 
+<img width="1088" height="403" alt="image" src="https://github.com/user-attachments/assets/306b8218-1c5e-4456-a0cc-473a27f1dc7a" />
+
 ```markdown
 ::dash_uptime{data=history label="API"}
 ```
@@ -98,6 +104,7 @@ history. The bar keeps the 90 most recent entries.
 ```
 
 ## `dash_delta`
+<img width="1088" height="403" alt="image" src="https://github.com/user-attachments/assets/0360de25-2bfe-4b11-ab5c-e12734a80c14" />
 
 ```markdown
 :dash_delta[error rate]{value=-3.2 unit="%"}
