@@ -1,4 +1,4 @@
-<img width="1088" height="420" alt="image" src="https://github.com/user-attachments/assets/db757b0a-eba9-4ffc-b3ed-4727492b2cc6" /># track
+# track
 
 Habit and progress tracking components: a calendar streak grid, a progress
 ring, a habit-by-day grid, and a dated log table. Nothing here makes a
