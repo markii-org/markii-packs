@@ -1,4 +1,4 @@
-# track
+<img width="1088" height="420" alt="image" src="https://github.com/user-attachments/assets/db757b0a-eba9-4ffc-b3ed-4727492b2cc6" /># track
 
 Habit and progress tracking components: a calendar streak grid, a progress
 ring, a habit-by-day grid, and a dated log table. Nothing here makes a
@@ -16,6 +16,8 @@ name, the written attribute wins. That matches `@markii/react`'s own
 `progress` and `stat`.
 
 ## `track_streak`
+
+<img width="1088" height="420" alt="image" src="https://github.com/user-attachments/assets/bbd6b6e6-f93b-48ca-ba8a-7d857ef27a9d" />
 
 ```markdown
 ::track_streak{data=days weeks=12 label="Meditation"}
@@ -36,6 +38,7 @@ anchored in UTC so it does not shift with the reader's timezone.
 ```
 
 ## `track_ring`
+<img width="1084" height="383" alt="image" src="https://github.com/user-attachments/assets/4e59ce69-2d76-4284-9603-748070a3ddf5" />
 
 ```markdown
 ::track_ring{data=progress label="Pages read" max=300}
@@ -60,6 +63,8 @@ The value is clamped to `[0, max]` and the ring shows the percentage.
 
 ## `track_habits`
 
+<img width="1084" height="383" alt="image" src="https://github.com/user-attachments/assets/7be46e40-41d8-4a41-8c22-9cf31ae84882" />
+
 ```markdown
 ::track_habits{data=week}
 ```
@@ -82,6 +87,8 @@ Rows are capped at 20 and days at 14. A row that is not a plain object is
 skipped; missing `days` falls back to numbered columns.
 
 ## `track_log`
+<img width="1084" height="399" alt="image" src="https://github.com/user-attachments/assets/31bda8f2-e730-4233-ade5-14e9e6095c0b" />
+
 
 ```markdown
 ::track_log{data=entries}
