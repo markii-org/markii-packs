@@ -12,6 +12,7 @@ note's script returns.
 | `::fin_allocation{}` | leaf | SVG donut chart with a legend, for a set of labeled shares. |
 
 ## `fin_ticker`
+<img width="1088" height="403" alt="image" src="https://github.com/user-attachments/assets/655be618-6ad9-46e8-839e-ae7cc55e6a7f" />
 
 ```markdown
 ::fin_ticker{data=quotes}
@@ -30,6 +31,7 @@ object.
 a non-finite `price` is skipped rather than shown as a blank chip.
 
 ## `fin_holdings`
+<img width="1088" height="420" alt="image" src="https://github.com/user-attachments/assets/6a0de926-b664-4450-a474-80138dca03b2" />
 
 ```markdown
 ::fin_holdings{data=portfolio currency="USD"}
@@ -53,6 +55,8 @@ non-finite `qty` or `price`, is skipped. Market value is `qty * price`, and
 a total row sums every visible position.
 
 ## `fin_allocation`
+
+<img width="1088" height="420" alt="image" src="https://github.com/user-attachments/assets/781c4b46-c35a-4329-a932-fbe41cb74458" />
 
 ```markdown
 ::fin_allocation{data=alloc label="By asset class"}
