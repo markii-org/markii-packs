@@ -1,0 +1,83 @@
+/*
+ * `:::tech_diff`, before/after code panes with line-level highlighting.
+ * Shares the two-column layout shape of `tech_compare` (same
+ * container-query stacking) so the two components read as a family.
+ */
+
+.mk-tech_diff {
+  container-type: inline-size;
+}
+
+.mk-tech_diff__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mk-muted);
+  margin-block-end: 0.5rem;
+}
+
+.mk-tech_diff__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.mk-tech_diff__grid > * {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+@container (max-width: 480px) {
+  .mk-tech_diff__grid {
+    flex-direction: column;
+  }
+
+  .mk-tech_diff__grid > * {
+    flex: 1 1 auto;
+  }
+}
+
+.mk-tech_diff__pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--mk-border);
+  border-radius: 8px;
+  background: var(--mk-raised);
+  overflow: hidden;
+}
+
+.mk-tech_diff__label {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--mk-muted);
+  background: var(--mk-surface);
+  border-bottom: 1px solid var(--mk-border);
+}
+
+.mk-tech_diff__pre {
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  overflow-x: auto;
+  background: var(--mk-surface);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.mk-tech_diff__code {
+  font-family: ui-monospace, monospace;
+}
+
+.mk-tech_diff__line {
+  display: block;
+  white-space: pre;
+}
+
+.mk-tech_diff__line--removed {
+  background: color-mix(in srgb, var(--mk-danger) 16%, var(--mk-surface));
+}
+
+.mk-tech_diff__line--added {
+  background: color-mix(in srgb, var(--mk-success) 16%, var(--mk-surface));
+}

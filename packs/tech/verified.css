@@ -1,0 +1,47 @@
+/*
+ * `::tech_verified`, a one-line verification record.
+ */
+
+.mk-tech_verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--mk-fg);
+}
+
+.mk-tech_verified__marker {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+}
+
+.mk-tech_verified__marker--worked {
+  background: var(--mk-success);
+}
+
+.mk-tech_verified__marker--failed {
+  background: var(--mk-danger);
+}
+
+.mk-tech_verified__marker--partial {
+  background: var(--mk-warning);
+}
+
+.mk-tech_verified__marker--other {
+  background: var(--mk-faint);
+}
+
+.mk-tech_verified__env {
+  font-family: ui-monospace, monospace;
+  color: var(--mk-fg);
+}
+
+.mk-tech_verified__date {
+  color: var(--mk-muted);
+}
+
+.mk-tech_verified__note {
+  color: var(--mk-muted);
+}

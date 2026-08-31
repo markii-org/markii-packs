@@ -1,0 +1,56 @@
+/*
+ * `:tech_method`, an HTTP method chip plus a monospace path. Each
+ * recognized method gets a tint derived from a semantic token; an
+ * unrecognized method falls back to a neutral surface tint.
+ */
+
+.mk-tech_method {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.mk-tech_method__chip {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  font-family: ui-monospace, monospace;
+}
+
+.mk-tech_method__chip--get {
+  color: var(--mk-info-ink);
+  background: var(--mk-info-strong-fill);
+}
+
+.mk-tech_method__chip--post {
+  color: var(--mk-success-ink);
+  background: var(--mk-success-strong-fill);
+}
+
+.mk-tech_method__chip--put,
+.mk-tech_method__chip--patch {
+  color: var(--mk-warning-ink);
+  background: var(--mk-warning-strong-fill);
+}
+
+.mk-tech_method__chip--delete {
+  color: var(--mk-danger-ink);
+  background: var(--mk-danger-strong-fill);
+}
+
+.mk-tech_method__chip--other {
+  color: var(--mk-muted);
+  background: var(--mk-surface-strong);
+}
+
+.mk-tech_method__path {
+  color: var(--mk-fg);
+  background: var(--mk-surface);
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}

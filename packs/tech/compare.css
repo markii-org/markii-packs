@@ -1,0 +1,42 @@
+/*
+ * `:::tech_compare`, a side-by-side layout for `tech_pane` children.
+ * `container-type: inline-size` lets the grid respond to ITS OWN width
+ * rather than the viewport, so a compare nested in a narrow sidebar
+ * stacks even on a wide screen. The `flex-wrap` fallback on the grid's
+ * children already degrades sensibly (wraps to new rows at the natural
+ * min-width) in a host without container query support, before the
+ * `@container` query below ever has a chance to apply.
+ */
+
+.mk-tech_compare {
+  container-type: inline-size;
+}
+
+.mk-tech_compare__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mk-muted);
+  margin-block-end: 0.5rem;
+}
+
+.mk-tech_compare__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.mk-tech_compare__grid > * {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+@container (max-width: 480px) {
+  .mk-tech_compare__grid {
+    flex-direction: column;
+  }
+
+  .mk-tech_compare__grid > * {
+    flex: 1 1 auto;
+  }
+}

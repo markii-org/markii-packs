@@ -1,0 +1,33 @@
+/*
+ * `:::tech_pane`, a labeled box. No outer margin; the document (or, when
+ * nested, the parent `compare`/`diff` grid) owns spacing between panes.
+ */
+
+.mk-tech_pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--mk-border);
+  border-radius: 8px;
+  background: var(--mk-raised);
+  overflow: hidden;
+}
+
+.mk-tech_pane__label {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--mk-muted);
+  background: var(--mk-surface);
+  border-bottom: 1px solid var(--mk-border);
+}
+
+.mk-tech_pane__body {
+  padding: 0.75rem;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.mk-tech_pane__body > :first-child {
+  margin-block-start: 0;
+}

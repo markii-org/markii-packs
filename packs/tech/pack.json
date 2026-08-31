@@ -1,0 +1,51 @@
+{
+  "name": "tech",
+  "engine": "react",
+  "components": {
+    "pane": {
+      "source": "./pane.tsx",
+      "description": "A labeled box: header strip plus children. Used inside compare/diff, or standing alone.",
+      "kind": "container"
+    },
+    "compare": {
+      "source": "./compare.tsx",
+      "description": "Lays two or three tech_pane children side by side, stacking on narrow width.",
+      "kind": "container"
+    },
+    "diff": {
+      "source": "./diff.tsx",
+      "description": "Side-by-side before/after code panes with a self-written line diff.",
+      "kind": "container"
+    },
+    "method": {
+      "source": "./method.tsx",
+      "description": "A colored HTTP method chip followed by a monospace path.",
+      "kind": "inline"
+    },
+    "status": {
+      "source": "./status.tsx",
+      "description": "A lifecycle badge: stable, beta, experimental, deprecated, removed, nightly, or unsafe.",
+      "kind": "inline"
+    },
+    "verified": {
+      "source": "./verified.tsx",
+      "description": "A one-line record of a manual verification: result, environment, date, and note.",
+      "kind": "leaf"
+    },
+    "tradeoff": {
+      "source": "./tradeoff.tsx",
+      "description": "Two columns, Pros and Cons, built from tech_pros/tech_cons children.",
+      "kind": "container"
+    },
+    "pros": {
+      "source": "./pros.tsx",
+      "description": "A labeled Pros block; a column inside tech_tradeoff, or a standalone list.",
+      "kind": "container"
+    },
+    "cons": {
+      "source": "./cons.tsx",
+      "description": "A labeled Cons block; a column inside tech_tradeoff, or a standalone list.",
+      "kind": "container"
+    }
+  }
+}

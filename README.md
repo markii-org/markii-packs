@@ -36,8 +36,10 @@ directives and attributes, and an `example.mk.md` you can open directly.
 | [blog](packs/blog/) | `header`, `byline`, `pullquote`, `aside` |
 | [track](packs/track/) | `streak`, `ring`, `habits`, `log` |
 | [fin](packs/fin/) | `ticker`, `holdings`, `allocation` |
+| [read](packs/read/) | `source`, `quote`, `term`, `at`, `mark` |
+| [tech](packs/tech/) | `compare`, `pane`, `diff`, `method`, `status`, `verified`, `tradeoff`, `pros`, `cons` |
 
-All four are maintained by markii-org.
+All six are maintained by markii-org.
 
 ## Publish your own pack
 

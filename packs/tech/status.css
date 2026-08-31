@@ -1,0 +1,52 @@
+/*
+ * `:tech_status`, a lifecycle badge. `--other` (unrecognized value)
+ * shares the neutral tint the `dash` and `blog` packs use for their own
+ * "no strong opinion" states.
+ */
+
+.mk-tech_status {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.mk-tech_status__since {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.mk-tech_status--stable {
+  color: var(--mk-success-ink);
+  background: var(--mk-success-strong-fill);
+}
+
+.mk-tech_status--beta,
+.mk-tech_status--experimental {
+  color: var(--mk-info-ink);
+  background: var(--mk-info-strong-fill);
+}
+
+.mk-tech_status--nightly {
+  color: var(--mk-limit-ink);
+  background: color-mix(in srgb, var(--mk-limit) 18%, var(--mk-bg));
+}
+
+.mk-tech_status--deprecated {
+  color: var(--mk-warning-ink);
+  background: var(--mk-warning-strong-fill);
+}
+
+.mk-tech_status--removed,
+.mk-tech_status--unsafe {
+  color: var(--mk-danger-ink);
+  background: var(--mk-danger-strong-fill);
+}
+
+.mk-tech_status--other {
+  color: var(--mk-muted);
+  background: var(--mk-surface-strong);
+}

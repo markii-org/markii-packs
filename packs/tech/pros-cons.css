@@ -1,0 +1,50 @@
+/*
+ * `:::tech_pros` / `:::tech_cons`, shared styling for the two labeled
+ * blocks, imported by both `pros.tsx` and `cons.tsx`. Every selector
+ * still starts with `.mk-tech_pros` or `.mk-tech_cons`, matching each
+ * component's own name, never a shared third prefix.
+ */
+
+.mk-tech_pros,
+.mk-tech_cons {
+  border: 1px solid var(--mk-border);
+  border-radius: 8px;
+  background: var(--mk-raised);
+  overflow: hidden;
+}
+
+.mk-tech_pros__label,
+.mk-tech_cons__label {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--mk-border);
+}
+
+.mk-tech_pros__label {
+  color: var(--mk-success-ink);
+  background: var(--mk-success-strong-fill);
+}
+
+.mk-tech_cons__label {
+  color: var(--mk-danger-ink);
+  background: var(--mk-danger-strong-fill);
+}
+
+.mk-tech_pros__body,
+.mk-tech_cons__body {
+  padding: 0.6rem 0.9rem;
+}
+
+.mk-tech_pros__body > :first-child,
+.mk-tech_cons__body > :first-child {
+  margin-block-start: 0;
+}
+
+.mk-tech_pros__body ul,
+.mk-tech_pros__body ol,
+.mk-tech_cons__body ul,
+.mk-tech_cons__body ol {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+}
