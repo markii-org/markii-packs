@@ -1,0 +1,31 @@
+{
+  "name": "data",
+  "engine": "react",
+  "components": {
+    "schema": {
+      "source": "./schema.tsx",
+      "description": "A schema card for a table or dataset, holding data_col children as its column list.",
+      "kind": "container"
+    },
+    "col": {
+      "source": "./col.tsx",
+      "description": "One column row: a monospace name, a muted type tag, an optional primary-key marker, and an optional note.",
+      "kind": "leaf"
+    },
+    "pipeline": {
+      "source": "./pipeline.tsx",
+      "description": "A horizontal flow of data_stage children with arrows between them, wrapping on narrow width.",
+      "kind": "container"
+    },
+    "stage": {
+      "source": "./stage.tsx",
+      "description": "One pipeline stage chip: a label, with an optional technology line under it.",
+      "kind": "leaf"
+    },
+    "fact": {
+      "source": "./fact.tsx",
+      "description": "A static figure worth remembering, shown large above its caption. Not data-bound.",
+      "kind": "leaf"
+    }
+  }
+}

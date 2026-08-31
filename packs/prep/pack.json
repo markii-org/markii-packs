@@ -1,0 +1,21 @@
+{
+  "name": "prep",
+  "engine": "react",
+  "components": {
+    "q": {
+      "source": "./q.tsx",
+      "description": "A question card whose answer stays hidden behind a collapsed \"Answer\" region, with an optional difficulty level and topic tag.",
+      "kind": "container"
+    },
+    "topic": {
+      "source": "./topic.tsx",
+      "description": "A topic header row with a one-to-five confidence rating drawn as filled and empty dots.",
+      "kind": "leaf"
+    },
+    "pitfall": {
+      "source": "./pitfall.tsx",
+      "description": "A common-mistake callout with its own marker and accent, separate from the standard callout styling.",
+      "kind": "container"
+    }
+  }
+}
