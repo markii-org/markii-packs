@@ -82,8 +82,14 @@ expected shape of the bound value for anything that reads `data=`. Copy
 2. Add your pack under `packs/<name>/`. Copy `template/` if that beats
    starting from an empty folder.
 3. Run `npm install`, then `npm run check`. That validates your manifest,
-   type-checks every component, and confirms each one bundles. It must end
-   with zero errors and zero warnings.
+   type-checks every component, confirms each one bundles, and renders your
+   pack's `example.mk.md` through the same registry a host builds at
+   install time. The render step catches what bundling alone cannot: a
+   directive name that does not match what `pack.json` declares, a
+   component exported in a form the loader cannot find, or a form mismatch
+   between how a component is written in the example (inline vs. block)
+   and the `kind` it declares. It must end with zero errors and zero
+   warnings.
 4. Open a pull request. CI runs the same `npm run check`.
 5. A maintainer reviews against the rules above. Acceptance adds your pack
    to the index in `README.md`.

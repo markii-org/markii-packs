@@ -4,7 +4,7 @@
   "description": "Curated component packs for Markii.",
   "type": "module",
   "scripts": {
-    "check": "node scripts/validate.mjs && tsc --noEmit && node scripts/build-check.mjs"
+    "check": "node scripts/validate.mjs && tsc --noEmit && node scripts/build-check.mjs && node scripts/render-check.mjs"
   },
   "devDependencies": {
     "typescript": "^5",
