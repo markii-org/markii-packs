@@ -3,7 +3,21 @@ name: CI
 on:
   push:
     branches: [main]
+    # Prose-only edits skip CI. Path filters apply to the whole push, so one
+    # source change anywhere in the pushed commits still runs the check.
+    # example.mk.md files are deliberately NOT ignored: the validator checks
+    # them and a future render probe will too.
+    paths-ignore:
+      - '**/README.md'
+      - '*.md'
+      - 'LICENSE'
+      - '.gitignore'
   pull_request:
+    paths-ignore:
+      - '**/README.md'
+      - '*.md'
+      - 'LICENSE'
+      - '.gitignore'
 
 jobs:
   check:
