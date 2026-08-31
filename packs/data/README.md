@@ -14,6 +14,7 @@ the note.
 | `::data_fact[]{}` | leaf | A static figure worth remembering, shown above its caption. |
 
 ## `data_schema`
+<img width="975" height="315" alt="image" src="https://github.com/user-attachments/assets/98eded04-f855-45aa-bda3-05a0072fedbf" />
 
 ```markdown
 :::data_schema{name="events_raw"}
@@ -51,6 +52,8 @@ Attributes:
 - `note` (string, optional): a short muted note at the end of the row.
 
 ## `data_pipeline`
+<img width="975" height="286" alt="image" src="https://github.com/user-attachments/assets/e95a8317-0f38-4a7d-a4e1-0351653f9b7b" />
+
 
 ```markdown
 ::::data_pipeline{title="Nightly sessionization"}
@@ -89,6 +92,8 @@ The label comes from the bracket content when it is written, and from
 placeholder.
 
 ## `data_fact`
+
+<img width="981" height="239" alt="image" src="https://github.com/user-attachments/assets/908e8937-f6c9-4216-8850-011a96861466" />
 
 ```markdown
 ::data_fact[default shuffle partitions]{value=200}
