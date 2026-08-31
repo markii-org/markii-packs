@@ -12,6 +12,8 @@ every attribute is typed in the note.
 | `:::prep_pitfall{}` | container | A common-mistake block, styled apart from the standard callout. |
 
 ## `prep_q`
+<img width="975" height="314" alt="image" src="https://github.com/user-attachments/assets/90e74ce1-870d-480d-ba82-a07a2c4a7aa5" />
+
 
 ```markdown
 :::prep_q{q="What does a bloom filter get wrong?" level=medium topic="data structures"}
@@ -35,6 +37,7 @@ directly, tags included. That keeps a half-written card readable instead
 of hiding its only content.
 
 ## `prep_topic`
+<img width="975" height="314" alt="image" src="https://github.com/user-attachments/assets/83ec4e63-da1f-422c-8ff2-d9aba5e84cc9" />
 
 ```markdown
 ::prep_topic[Graph traversal]{confidence=3}
@@ -53,6 +56,7 @@ placeholder. A `confidence` that is not a number omits the dots entirely,
 because "not rated yet" and "rated zero" are different things.
 
 ## `prep_pitfall`
+<img width="975" height="322" alt="image" src="https://github.com/user-attachments/assets/b960ded0-adfc-412e-b67a-16c7241770e3" />
 
 ```markdown
 :::prep_pitfall{title="Off by one on the window"}
