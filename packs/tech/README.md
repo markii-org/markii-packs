@@ -18,6 +18,7 @@ every attribute is typed in the note.
 | `:::tech_cons{}` | container | A labeled Cons block. |
 
 ## `tech_pane`
+<img width="964" height="310" alt="image" src="https://github.com/user-attachments/assets/99579cae-7893-46cf-b1c3-22355ea04365" />
 
 ```markdown
 :::tech_pane{label="Scala"}
@@ -35,6 +36,7 @@ Attributes:
 then the markdown content below.
 
 ## `tech_compare`
+<img width="964" height="310" alt="image" src="https://github.com/user-attachments/assets/ac732fcf-dace-4394-8ca9-9c9c88c7fe3f" />
 
 ```markdown
 ::::tech_compare{title="Collection defaults"}
@@ -59,6 +61,7 @@ so `tech_compare` never re-implements pane markup. Zero panes, or
 children that are not panes, still render without error.
 
 ## `tech_diff`
+<img width="964" height="310" alt="image" src="https://github.com/user-attachments/assets/5c21f63f-db2b-4531-b2e5-0bb53b5d8875" />
 
 ````markdown
 ::::tech_diff{title="Rate limiter"}
@@ -94,6 +97,7 @@ with no code block, or fewer than two panes all fall back to the plain
 `tech_compare` layout, quietly, with no highlighting and no error shown.
 
 ## `tech_method`
+<img width="964" height="170" alt="image" src="https://github.com/user-attachments/assets/ffcc743a-eb5e-4d32-af4f-ca5a62d9346e" />
 
 ```markdown
 :tech_method[POST]{path="/users/{id}/roles"}
@@ -108,6 +112,7 @@ The directive's text is the method. `GET`, `POST`, `PUT`, `PATCH`, and
 renders as neutral text exactly as written.
 
 ## `tech_status`
+<img width="964" height="170" alt="image" src="https://github.com/user-attachments/assets/ae888089-954a-4fb4-9a9f-d065cf25375a" />
 
 ```markdown
 :tech_status[deprecated]{since="3.5"}
@@ -124,6 +129,7 @@ its own tint; anything else renders neutral, with the text shown exactly
 as written.
 
 ## `tech_verified`
+<img width="964" height="170" alt="image" src="https://github.com/user-attachments/assets/7b856e30-cb32-4a18-97db-9feac91d1350" />
 
 ```markdown
 ::tech_verified{env="Spark 3.5.1" result=worked date="2026-08-12" note="Confirmed on a 12-node cluster"}
@@ -141,6 +147,7 @@ Every field is independent and optional. With nothing usable at all, the
 line renders a quiet placeholder rather than an empty box.
 
 ## `tech_tradeoff`
+<img width="974" height="298" alt="image" src="https://github.com/user-attachments/assets/14842e96-e6bb-4cd6-abe2-4c25a88bd80a" />
 
 ```markdown
 ::::tech_tradeoff{title="Switching to async I/O"}
