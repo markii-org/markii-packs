@@ -34,13 +34,35 @@ Attributes:
   neutral rather than forced into the default look.
 - `status` (string, optional): one of `queued`, `reading`, `done`.
   Anything else is omitted entirely rather than shown as "unknown".
-- `progress` (number, optional): 0 to 100. Clamped into range; a written
-  attribute always wins over a bound value.
+- `progress` (number, optional): 0 to 100, clamped into range.
+- `pages-read` (number, optional): pages read so far.
+- `pages` (number, optional): the total page count.
 
 The byline reads "Author, 2019" when both are present, "Author" or "2019"
 alone when only one is, and is omitted entirely when neither is set. The
-progress bar only appears when a progress value, written or bound, is
-available.
+progress bar only appears when a progress value is available from one of
+the three sources below.
+
+### How far along a source is
+
+There are three ways to say it, and they are tried in this order:
+
+1. a written `progress`,
+2. the `pages-read` and `pages` pair,
+3. a `data=` binding.
+
+The pair is usually what a reader has to hand, so writing both turns into
+a percentage: `pages-read / pages`, rounded, clamped to 0 through 100. The
+progress bar then carries a tooltip reading "120 of 340 pages", so the
+count that produced the bar stays readable without cluttering the card.
+
+```markdown
+::read_source{title="The Making of the Atomic Bomb" pages-read=120 pages=340}
+```
+
+Both counts must be whole numbers, and `pages` must be greater than zero.
+A fraction, a negative, a word, or a `pages` of zero is ignored, and the
+binding takes over as if the pair had not been written. Nothing errors.
 
 Bound data (`data=`): a finite number, or an object with a finite
 `.progress` or `.value` field.
@@ -96,19 +118,32 @@ The directive's text is the term itself.
 
 ```markdown
 :read_at[12:34]{href="https://example.com/watch?v=abc123"}
+
+:read_at[p. 42]{href="https://example.com/paper.pdf"}
 ```
 
 Attributes:
 
 - `href` (string, optional): a link target. When it parses as a safe
-  `http:`/`https:` URL, the chip becomes a link, and the parsed timestamp
-  (if any) is appended to the URL as `t=<seconds>`, replacing any existing
-  `t` and preserving the rest of the query string. Anything else renders a
-  plain, unlinked chip.
+  `http:`/`https:` URL, the chip becomes a link, and the position the text
+  names is added to that URL. Anything else renders a plain, unlinked
+  chip.
 
-The directive's text is parsed as `mm:ss`, `m:ss`, or `hh:mm:ss` and is
-also what gets displayed, unchanged. An unparseable timestamp still
-displays and still links (just without `t`) if the `href` is safe.
+The directive's text is read two ways, and the chip always displays it
+exactly as written either way.
+
+A timestamp is `mm:ss`, `m:ss`, or `hh:mm:ss`. It is appended to a safe
+`href` as `t=<seconds>` in the query string, replacing any existing `t`
+and preserving the rest.
+
+A page reference is `p. 42`, `p.42`, `page 42`, or a bare `42`. It sets
+the URL fragment to `#page=42`, the convention a PDF viewer reads,
+replacing any fragment the `href` already carried. The two readings never
+collide: a timestamp always has a colon in it, a page reference never
+does.
+
+Text that is neither still displays, and still links if the `href` is
+safe, just with nothing appended.
 
 ## `read_mark`
 <img width="970" height="202" alt="image" src="https://github.com/user-attachments/assets/22c16133-2656-4a5f-a518-317b7e3c8375" />

@@ -73,3 +73,25 @@ export function safely<T>(read: () => T, fallback: () => T): T {
     return fallback();
   }
 }
+
+/**
+ * The one CSS length pattern this pack accepts from a note: a plain
+ * decimal number followed by `px`, `rem`, `em`, or `ch`. No sign, no
+ * exponent, no calc, no bare number, no unit outside the four.
+ */
+const CSS_LENGTH_PATTERN = /^\d+(\.\d+)?(px|rem|em|ch)$/;
+
+/**
+ * Reads an attribute as a CSS length, or `undefined` when it is anything
+ * else. Nothing here ever reaches a `style` unvalidated: an attribute
+ * value is written by hand in the note, so `min-width="100%;position:fixed"`
+ * is a thing an author can type, and React would pass a bad string
+ * straight through to the DOM. The strict pattern is the whole guard, so
+ * a rejected value simply lays the chip out at its natural width, quietly,
+ * exactly as if the attribute had not been written.
+ */
+export function cssLength(raw: unknown): string | undefined {
+  if (typeof raw !== 'string') return undefined;
+  const trimmed = raw.trim();
+  return CSS_LENGTH_PATTERN.test(trimmed) ? trimmed : undefined;
+}

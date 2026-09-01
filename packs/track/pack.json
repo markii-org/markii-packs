@@ -5,22 +5,71 @@
     "streak": {
       "source": "./streak.tsx",
       "description": "A GitHub-style calendar grid of done days for a habit streak.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound done days: an array of YYYY-MM-DD strings.",
+          "required": true
+        },
+        {
+          "name": "weeks",
+          "description": "How many weeks to show, clamped to 4 through 26.",
+          "default": "12"
+        },
+        {
+          "name": "label",
+          "description": "A caption above the grid."
+        }
+      ]
     },
     "ring": {
       "source": "./ring.tsx",
       "description": "A hand-rolled SVG progress ring for a single value against a max.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound value: a number, or an object with value and optional max fields."
+        },
+        {
+          "name": "value",
+          "description": "The current value. Wins over the binding."
+        },
+        {
+          "name": "max",
+          "description": "The ring's maximum. Wins over the binding.",
+          "default": "100"
+        },
+        {
+          "name": "label",
+          "description": "A caption under the ring."
+        }
+      ]
     },
     "habits": {
       "source": "./habits.tsx",
       "description": "A compact grid of habits by day, checked off per day.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound week: an object with an optional days array and a rows array of habits.",
+          "required": true
+        }
+      ]
     },
     "log": {
       "source": "./log.tsx",
       "description": "A minimal table of dated log entries with an optional numeric value.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound entries: an array of objects with date, text, and an optional numeric value.",
+          "required": true
+        }
+      ]
     }
   }
 }

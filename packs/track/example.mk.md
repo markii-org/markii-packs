@@ -21,7 +21,14 @@ request anywhere, which is the point of this pack.
 
 ## This week
 
+The grid below sizes to its own columns rather than filling the page, so
+the `:::center` around it has something to place.
+
+:::center
+
 ::track_habits{data=track.week}
+
+:::
 
 ## Log
 

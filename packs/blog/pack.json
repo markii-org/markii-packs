@@ -5,22 +5,66 @@
     "header": {
       "source": "./header.tsx",
       "description": "A post masthead: large title, muted subtitle, and an author/date meta line.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "The post title, shown large at the top."
+        },
+        {
+          "name": "subtitle",
+          "description": "A muted line under the title."
+        },
+        {
+          "name": "author",
+          "description": "Shown in the meta line under the titles."
+        },
+        {
+          "name": "date",
+          "description": "Shown in the meta line, next to the author."
+        }
+      ]
     },
     "byline": {
       "source": "./byline.tsx",
       "description": "A compact one-line author strip with a generated monogram.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "author",
+          "description": "The author name, shown next to the generated monogram."
+        },
+        {
+          "name": "role",
+          "description": "A short role label such as Editor or Guest writer."
+        },
+        {
+          "name": "date",
+          "description": "Shown at the end of the strip."
+        }
+      ]
     },
     "pullquote": {
       "source": "./pullquote.tsx",
       "description": "A large-type excerpt set off from the body, with an optional cite line.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "cite",
+          "description": "A short attribution line under the quote."
+        }
+      ]
     },
     "aside": {
       "source": "./aside.tsx",
       "description": "A footnote-style side note, smaller type with a subtle left rule.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "label",
+          "description": "A small-caps label above the note."
+        }
+      ]
     }
   }
 }

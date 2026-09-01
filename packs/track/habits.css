@@ -3,8 +3,18 @@
  * `--mk-*` tokens throughout.
  */
 
+/*
+ * Frameless and content-sized, so the root hugs its own content instead of
+ * filling the column. A component with a visible frame fills the column;
+ * this one has no frame, so the box has to be as wide as what is in it,
+ * which is what gives `:::center` and `align=` something narrower than the
+ * column to place. `max-width` keeps a wide grid from spilling past the
+ * column.
+ */
 .mk-track_habits {
   margin: 0;
+  width: fit-content;
+  max-width: 100%;
   overflow-x: auto;
 }
 

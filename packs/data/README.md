@@ -66,6 +66,8 @@ Attributes:
 Attributes:
 
 - `title` (string, optional): a small heading above the flow.
+- `min-width` (length, optional): the default width floor for every stage
+  in the flow. See the note under `data_stage` for the accepted lengths.
 
 Recognizes `data_stage` children by name and draws an arrow between each
 pair, wrapping to further rows when the flow is wider than the page. Only
@@ -73,6 +75,12 @@ the container knows which stage is first, which is why it rebuilds the
 chips rather than laying out its children directly; the chips use the same
 markup a stage renders on its own. With no recognized stage children, the
 content renders as written, without a flow layout imposed on it.
+
+The flow has no frame, so it sizes to its own chips rather than filling
+the column, and `:::center` or `align=right` can place it. A short
+pipeline sits where you put it; a long one still fills the column and
+wraps. The schema card is the other way round: it has a frame, so it
+fills the column like any card.
 
 ## `data_stage`
 
@@ -86,10 +94,27 @@ Attributes:
   not use bracket content.
 - `tech` (string, optional): the technology, in smaller monospace under
   the label.
+- `min-width` (length, optional): a floor on the chip's width, so a flow
+  of stages with labels of very different lengths reads as an even row.
 
 The label comes from the bracket content when it is written, and from
 `name` otherwise. With neither, the chip renders an "unnamed stage"
 placeholder.
+
+`min-width` must be a plain CSS length in `px`, `rem`, `em`, or `ch`:
+`7rem` and `96px` are accepted, `50%`, `calc(10rem + 2px)` and a bare
+number are not. Anything unaccepted is ignored and the chip keeps its
+natural width, quietly, since a note is not the place to report a CSS
+mistake. Writing it on the flow sets the default for every stage, and a
+stage's own value wins over that. It is a minimum only, so a flow that no
+longer fits on one line still wraps.
+
+```markdown
+::::data_pipeline{title="Nightly sessionization" min-width="7rem"}
+::data_stage[Ingest]{tech="Kafka"}
+::data_stage[Sessionize]{tech="Spark" min-width="10rem"}
+::::
+```
 
 ## `data_fact`
 

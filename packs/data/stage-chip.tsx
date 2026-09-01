@@ -17,22 +17,29 @@ import './stage.css';
  * there, since it is the closest thing to the text; otherwise the `name`
  * attribute is used. With neither, the chip still renders, as a quiet
  * "unnamed stage" placeholder, so a half-written flow keeps its shape.
+ *
+ * `minWidth` is an already-validated CSS length (see `guard.ts`'s
+ * `cssLength`) or `undefined`. Nothing else is accepted here: the caller
+ * validates, so this component never puts a raw attribute string into a
+ * `style`.
  */
 export function StageChip({
   children,
   name,
   tech,
+  minWidth,
 }: {
   children?: ReactNode;
   name: string;
   tech: string;
+  minWidth?: string;
 }): ReactElement {
   const written = hasContent(children);
   const hasLabel = written || name !== '';
   const label: ReactNode = written ? children : name !== '' ? name : 'unnamed stage';
 
   return (
-    <span className="mk-data_stage">
+    <span className="mk-data_stage" style={minWidth !== undefined ? { minWidth } : undefined}>
       <span
         className={
           hasLabel ? 'mk-data_stage__label' : 'mk-data_stage__label mk-data_stage__label--placeholder'

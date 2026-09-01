@@ -5,27 +5,85 @@
     "schema": {
       "source": "./schema.tsx",
       "description": "A schema card for a table or dataset, holding data_col children as its column list.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "The table or dataset name, shown in monospace."
+        }
+      ]
     },
     "col": {
       "source": "./col.tsx",
       "description": "One column row: a monospace name, a muted type tag, an optional primary-key marker, and an optional note.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "The column name, shown in monospace."
+        },
+        {
+          "name": "type",
+          "description": "The column type, shown as a muted tag."
+        },
+        {
+          "name": "pk",
+          "description": "Marks the column as a primary key. Normally written bare."
+        },
+        {
+          "name": "note",
+          "description": "A short muted note at the end of the row."
+        }
+      ]
     },
     "pipeline": {
       "source": "./pipeline.tsx",
       "description": "A horizontal flow of data_stage children with arrows between them, wrapping on narrow width.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "A small heading above the flow."
+        },
+        {
+          "name": "min-width",
+          "description": "Default width floor for every stage in the flow, as a px, rem, em, or ch length."
+        }
+      ]
     },
     "stage": {
       "source": "./stage.tsx",
       "description": "One pipeline stage chip: a label, with an optional technology line under it.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "The stage label, for when bracket content is not used."
+        },
+        {
+          "name": "tech",
+          "description": "The technology, in smaller monospace under the label."
+        },
+        {
+          "name": "min-width",
+          "description": "Width floor for this chip, as a px, rem, em, or ch length. Wins over the flow default."
+        }
+      ]
     },
     "fact": {
       "source": "./fact.tsx",
       "description": "A static figure worth remembering, shown large above its caption. Not data-bound.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The figure, shown large in monospace."
+        },
+        {
+          "name": "label",
+          "description": "The caption, for when bracket content is not used."
+        }
+      ]
     }
   }
 }

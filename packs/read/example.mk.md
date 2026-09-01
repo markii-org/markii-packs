@@ -21,6 +21,17 @@ levels of a hierarchical system, we unexpectedly find ourselves right back
 where we started.
 :::
 
+## The Making of the Atomic Bomb
+
+::read_source{title="The Making of the Atomic Bomb" author="Richard Rhodes" year="1986" type=book status=reading pages-read=120 pages=340}
+
+No script feeds that card. The bar comes from the two page counts written
+on it, and hovering the bar says "120 of 340 pages", which is the number I
+actually keep track of while reading.
+
+The chapter on Los Alamos starts at :read_at[p. 449]{href="https://example.com/atomic-bomb.pdf"},
+and the link carries the page with it.
+
 ## A talk on the halting problem
 
 ::read_source{title="Computability and the Limits of Computation" author="Ana Reyes" type=talk status=done}

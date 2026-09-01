@@ -5,17 +5,46 @@
     "ticker": {
       "source": "./ticker.tsx",
       "description": "Horizontal strip of quote chips: symbol, price, and signed change.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound quotes: an array of objects with symbol, price, and optional change fields.",
+          "required": true
+        }
+      ]
     },
     "holdings": {
       "source": "./holdings.tsx",
       "description": "Portfolio table with computed market value per position and a total row.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound positions: an array of objects with symbol, qty, price, and optional name.",
+          "required": true
+        },
+        {
+          "name": "currency",
+          "description": "A display prefix or suffix for every price and value."
+        }
+      ]
     },
     "allocation": {
       "source": "./allocation.tsx",
       "description": "SVG donut chart with a legend, for a set of labeled shares.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound shares: an array of objects with a label and a positive value.",
+          "required": true
+        },
+        {
+          "name": "label",
+          "description": "A caption shown next to the chart."
+        }
+      ]
     }
   }
 }

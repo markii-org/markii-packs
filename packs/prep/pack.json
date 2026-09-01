@@ -5,17 +5,53 @@
     "q": {
       "source": "./q.tsx",
       "description": "A question card whose answer stays hidden behind a collapsed \"Answer\" region, with an optional difficulty level and topic tag.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "q",
+          "description": "The question, shown in the card header above the collapsed answer."
+        },
+        {
+          "name": "level",
+          "description": "The difficulty tag. An unrecognized value shows as written, styled neutral.",
+          "values": [
+            "easy",
+            "medium",
+            "hard"
+          ]
+        },
+        {
+          "name": "topic",
+          "description": "A small neutral tag next to the level."
+        }
+      ]
     },
     "topic": {
       "source": "./topic.tsx",
       "description": "A topic header row with a one-to-five confidence rating drawn as filled and empty dots.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "The topic, for when bracket content is not used."
+        },
+        {
+          "name": "confidence",
+          "description": "A confidence rating from 1 to 5, drawn as filled and empty dots."
+        }
+      ]
     },
     "pitfall": {
       "source": "./pitfall.tsx",
       "description": "A common-mistake callout with its own marker and accent, separate from the standard callout styling.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "The heading above the note.",
+          "default": "Common mistake"
+        }
+      ]
     }
   }
 }

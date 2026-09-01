@@ -54,7 +54,8 @@ only runs in one, it is not ready.
 
 ```
 packs/<name>/
-  pack.json       object form: every component has a description and a kind
+  pack.json       object form: every component has a description, a kind,
+                  and its attributes
   <sources>       the component files the manifest names
   README.md       see template/README.md
   example.mk.md   a demo note using the pack's directives
@@ -64,6 +65,17 @@ packs/<name>/
 `description` and `kind` filled in. The underlying format treats `kind` as
 optional; here it is required, because reviewers need to see `leaf`,
 `container`, or `inline` stated plainly.
+
+Every component also declares `attributes`: one entry per attribute it
+reads, each with a `name` and a one-line `description`, plus `required`
+where the component cannot do without it, `values` for a closed set, and
+`default` where there is one. Declare `data` too, on anything that reads a
+binding. This is what an editor offers in a completion popup, so an
+attribute a component reads but never declares is an attribute nobody can
+discover. A component that reads no attributes at all declares an empty
+list, which says so deliberately. Leave out `width` and `align`: the
+layout system owns those names on every block component, and a
+declaration of either is ignored.
 
 Write the directives in your README and example the way the declared kind
 requires: `:name[text]{attrs}` for `inline`, `::name{attrs}` for `leaf`,
@@ -88,8 +100,10 @@ expected shape of the bound value for anything that reads `data=`. Copy
    directive name that does not match what `pack.json` declares, a
    component exported in a form the loader cannot find, or a form mismatch
    between how a component is written in the example (inline vs. block)
-   and the `kind` it declares. It must end with zero errors and zero
-   warnings.
+   and the `kind` it declares. It must end with zero errors. Warnings are
+   read, not ignored: the one expected today is the unknown-key warning
+   for `attributes`, which the pinned `@markii/pack` does not understand
+   yet. Anything else in the warning list is yours to fix.
 4. Open a pull request. CI runs the same `npm run check`.
 5. A maintainer reviews against the rules above. Acceptance adds your pack
    to the index in `README.md`.

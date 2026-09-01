@@ -15,6 +15,14 @@ Where a component reads both a `data=` binding and an attribute of the same
 name, the written attribute wins. That matches `@markii/react`'s own
 `progress` and `stat`.
 
+None of these four has a frame, so each sizes to its own content instead
+of filling the column: a ring is as wide as the ring, a habit grid as wide
+as its columns. That is what lets a layout wrapper place them. `:::center`
+around a habit grid centers the grid, and `{align=right}` on a ring moves
+the ring, because there is now space in the column for them to move
+through. A wide grid still caps at the column width and scrolls
+horizontally inside its own box rather than pushing the page sideways.
+
 ## `track_streak`
 
 <img width="1088" height="420" alt="image" src="https://github.com/user-attachments/assets/bbd6b6e6-f93b-48ca-ba8a-7d857ef27a9d" />
@@ -69,8 +77,8 @@ The value is clamped to `[0, max]` and the ring shows the percentage.
 ::track_habits{data=week}
 ```
 
-No attributes. Bound data: an object with an optional `days` array of
-column labels and a `rows` array of habits, each with a `name` and a `done`
+No attributes beyond `data`. Bound data: an object with an optional `days`
+array of column labels and a `rows` array of habits, each with a `name` and a `done`
 array of booleans, one per day:
 
 ```json
@@ -94,8 +102,8 @@ skipped; missing `days` falls back to numbered columns.
 ::track_log{data=entries}
 ```
 
-No attributes. Bound data: an array of entries, each with a `date`, a
-`text`, and an optional numeric `value` shown right-aligned:
+No attributes beyond `data`. Bound data: an array of entries, each with a
+`date`, a `text`, and an optional numeric `value` shown right-aligned:
 
 ```json
 [

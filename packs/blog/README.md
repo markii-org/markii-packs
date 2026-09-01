@@ -49,6 +49,12 @@ Attributes:
   author".
 - `date` (string, optional): shown at the end of the strip.
 
+The strip has no frame, so it sizes to its own content rather than
+filling the column. That is what gives a layout wrapper something to
+place: `:::center` around a byline centers the strip itself. The pullquote
+and the aside keep their rules against the column edge instead, since
+their content is prose that should wrap at the full column width.
+
 ## `blog_pullquote`
 
 <img width="1088" height="403" alt="image" src="https://github.com/user-attachments/assets/bcc636af-8033-4775-9867-4f9b2a8aa44f" />

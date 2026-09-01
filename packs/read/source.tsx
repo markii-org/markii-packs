@@ -42,6 +42,46 @@ function isKnownStatus(value: string): value is KnownStatus {
 }
 
 /**
+ * The largest page count this component treats as a real one. A page
+ * number past a million is not a book, it is a typo or a hostile value,
+ * and it would otherwise reach the progress tooltip as written.
+ */
+const MAX_PAGES = 1_000_000;
+
+/**
+ * Reads an attribute as a page count: a whole number from zero to
+ * `MAX_PAGES`, written as a number or as a numeric string. A fraction, a
+ * negative, a word, a bare attribute, or an absurd count all yield
+ * `undefined`, which means "no page count was written" rather than an
+ * error.
+ */
+function pageCount(raw: unknown): number | undefined {
+  const value = finiteOrUndefined(raw);
+  if (value === undefined) return undefined;
+  if (!Number.isInteger(value) || value < 0 || value > MAX_PAGES) return undefined;
+  return value;
+}
+
+/**
+ * Turns the `pages-read`/`pages` pair into a percentage and the tooltip
+ * that explains it, or `undefined` when the pair cannot be used. Both
+ * counts have to be there, and `pages` has to be greater than zero:
+ * `pages=0` is a source whose length was never recorded, not a source
+ * that is zero percent read, so it yields nothing rather than dividing by
+ * zero.
+ */
+function pagesProgress(
+  read: number | undefined,
+  total: number | undefined,
+): { percent: number; title: string } | undefined {
+  if (read === undefined || total === undefined || total <= 0) return undefined;
+  return {
+    percent: clamp(Math.round((read / total) * 100), 0, 100),
+    title: `${String(read)} of ${String(total)} pages`,
+  };
+}
+
+/**
  * Reads a progress value off a bound value: a bare finite number, or a
  * plain object's finite `.progress` or `.value` field (`.progress` wins
  * when both are present). Anything else yields `undefined`.
@@ -63,11 +103,18 @@ function extractProgress(data: unknown): number | undefined {
  * a compact citation card. `type` and `status` are closed sets; an
  * unrecognized `type` still shows as a neutral badge carrying the raw
  * text (capped), while an unrecognized `status` is simply omitted rather
- * than guessed at. `progress` accepts a written attribute or a `data=`
- * binding the way `dash_gauge` does, a written attribute always winning;
- * the bound shape is a bare number or an object with a finite `.progress`
- * or `.value` field. A source with no usable `title` still renders, as a
- * quiet "Untitled source" placeholder, rather than vanishing or crashing.
+ * than guessed at.
+ *
+ * There are three ways to say how far along a source is, tried in this
+ * order: a written `progress`, then the `pages-read`/`pages` pair, then a
+ * `data=` binding. The pair is what a reader actually has to hand, so
+ * writing both turns into a percentage (rounded, clamped to 0..100) and
+ * the bar carries a "120 of 340 pages" tooltip. A junk page count is
+ * ignored and the binding takes over, the same as if it had not been
+ * written. The bound shape is a bare number or an object with a finite
+ * `.progress` or `.value` field. A source with no usable `title` still
+ * renders, as a quiet "Untitled source" placeholder, rather than
+ * vanishing or crashing.
  */
 export function Source({
   attributes,
@@ -86,8 +133,14 @@ export function Source({
     () => (isUnreadable(dataStatus) ? undefined : extractProgress(data)),
     () => undefined,
   );
+  // A written `progress` is checked first, so the pages pair is only ever
+  // consulted when there is no percentage written by hand to defer to.
   const attrProgress = finiteOrUndefined(attributes.progress);
-  const rawProgress = attrProgress ?? bound.fields;
+  const fromPages =
+    attrProgress === undefined
+      ? pagesProgress(pageCount(attributes['pages-read']), pageCount(attributes.pages))
+      : undefined;
+  const rawProgress = attrProgress ?? fromPages?.percent ?? bound.fields;
   const progress =
     rawProgress !== undefined ? clamp(rawProgress, 0, 100) : undefined;
   const title = failureTitle(dataError, bound.fault);
@@ -137,7 +190,7 @@ export function Source({
         </div>
       )}
       {progress !== undefined && (
-        <div className="mk-read_source__progress-track">
+        <div className="mk-read_source__progress-track" title={fromPages?.title}>
           <div
             className="mk-read_source__progress-fill"
             style={{ width: `${String(progress)}%` }}

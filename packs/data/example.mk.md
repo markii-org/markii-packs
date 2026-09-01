@@ -50,13 +50,18 @@ event does not rewrite an old partition.
 
 ## How a session gets built
 
-::::data_pipeline{title="Nightly sessionization"}
+::::data_pipeline{title="Nightly sessionization" min-width="7rem"}
 ::data_stage[Ingest]{tech="Kafka"}
 ::data_stage[Land]{tech="S3, parquet"}
 ::data_stage[Clean]{tech="Spark SQL"}
-::data_stage[Sessionize]{tech="Spark, window functions"}
+::data_stage[Sessionize]{tech="Spark, window functions" min-width="11rem"}
 ::data_stage{name="Publish" tech="Iceberg"}
 ::::
+
+The `min-width` on the flow gives every chip the same 7rem floor, so the
+row reads evenly instead of tracking the length of each label. The
+sessionize stage overrides it: that one carries the longest technology
+line, and a wider chip keeps it on one line.
 
 The sessionize step is the expensive one: it is the only stage that
 shuffles on `user_id`, and it is where the 200 partition default stops

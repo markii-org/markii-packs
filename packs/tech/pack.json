@@ -5,47 +5,108 @@
     "pane": {
       "source": "./pane.tsx",
       "description": "A labeled box: header strip plus children. Used inside compare/diff, or standing alone.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The header strip's text. Omit it for an unlabeled box."
+        }
+      ]
     },
     "compare": {
       "source": "./compare.tsx",
       "description": "Lays two or three tech_pane children side by side, stacking on narrow width.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "A small heading above the panes."
+        }
+      ]
     },
     "diff": {
       "source": "./diff.tsx",
       "description": "Side-by-side before/after code panes with a self-written line diff.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "A small heading above the panes."
+        }
+      ]
     },
     "method": {
       "source": "./method.tsx",
       "description": "A colored HTTP method chip followed by a monospace path.",
-      "kind": "inline"
+      "kind": "inline",
+      "attributes": [
+        {
+          "name": "path",
+          "description": "The request path, shown in monospace after the chip."
+        }
+      ]
     },
     "status": {
       "source": "./status.tsx",
       "description": "A lifecycle badge: stable, beta, experimental, deprecated, removed, nightly, or unsafe.",
-      "kind": "inline"
+      "kind": "inline",
+      "attributes": [
+        {
+          "name": "since",
+          "description": "Appended inside the badge as since <value>."
+        }
+      ]
     },
     "verified": {
       "source": "./verified.tsx",
       "description": "A one-line record of a manual verification: result, environment, date, and note.",
-      "kind": "leaf"
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "env",
+          "description": "The environment verified in, shown in monospace."
+        },
+        {
+          "name": "result",
+          "description": "How it went. Anything else renders a neutral marker.",
+          "values": [
+            "worked",
+            "failed",
+            "partial"
+          ]
+        },
+        {
+          "name": "date",
+          "description": "Shown after the environment."
+        },
+        {
+          "name": "note",
+          "description": "A short muted note at the end of the line."
+        }
+      ]
     },
     "tradeoff": {
       "source": "./tradeoff.tsx",
       "description": "Two columns, Pros and Cons, built from tech_pros/tech_cons children.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "A small heading above the columns."
+        }
+      ]
     },
     "pros": {
       "source": "./pros.tsx",
       "description": "A labeled Pros block; a column inside tech_tradeoff, or a standalone list.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": []
     },
     "cons": {
       "source": "./cons.tsx",
       "description": "A labeled Cons block; a column inside tech_tradeoff, or a standalone list.",
-      "kind": "container"
+      "kind": "container",
+      "attributes": []
     }
   }
 }
