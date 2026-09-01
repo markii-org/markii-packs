@@ -80,3 +80,37 @@ only thing on the card.
 An index that holds every column the query reads, so the engine answers
 from the index alone and never visits the table rows.
 :::
+
+## Self-test
+
+The cards above are the source. Rather than typing the same questions out
+a second time, one script reads them back off the note itself and returns
+a quiz, and the component below renders it.
+
+`doc.directives{ name = "prep_q" }` hands back every `prep_q` block in
+document order, each with the attributes it was written with and its
+plain inner text. The answer is that text. A card with no `q` attribute
+is skipped here, because a card still being drafted has no question to
+test yourself against yet.
+
+```lua {name=quiz}
+local questions = {}
+
+for _, card in ipairs(doc.directives{ name = "prep_q" }) do
+  if card.attributes.q then
+    questions[#questions + 1] = {
+      q = card.attributes.q,
+      topic = card.attributes.topic,
+      level = card.attributes.level,
+      answer = card.text,
+    }
+  end
+end
+
+return { questions = questions }
+```
+
+::prep_quiz{data=quiz}
+
+Run the note to fill it in. Before the first run there is nothing bound
+yet, so the component says so quietly and the page stays readable.

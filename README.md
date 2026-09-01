@@ -38,7 +38,7 @@ directives and attributes, and an `example.mk.md` you can open directly.
 | [fin](packs/fin/) | `ticker`, `holdings`, `allocation` |
 | [read](packs/read/) | `source`, `quote`, `term`, `at`, `mark` |
 | [tech](packs/tech/) | `compare`, `pane`, `diff`, `method`, `status`, `verified`, `tradeoff`, `pros`, `cons` |
-| [prep](packs/prep/) | `q`, `topic`, `pitfall` |
+| [prep](packs/prep/) | `q`, `topic`, `quiz`, `pitfall` |
 | [data](packs/data/) | `schema`, `col`, `pipeline`, `stage`, `fact` |
 
 All eight are maintained by markii-org.

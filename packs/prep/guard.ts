@@ -2,12 +2,19 @@
  * Shared defensive helpers for the `prep` pack, following the same shape
  * as `packs/tech/guard.ts`.
  *
- * None of `prep`'s components read a bound `data=` value: an interview
+ * Most of `prep`'s components read nothing but attributes: an interview
  * question, a confidence rating, and a pitfall note are all typed into
- * the note by hand. Every one of them still reads raw attributes, which
- * arrive as untrusted strings (or `null` for a bare attribute), so all
- * attribute reads go through one of these helpers. A missing, oversized,
- * or nonsense value degrades to a quiet default rather than throwing.
+ * the note by hand. Attributes arrive as untrusted strings (or `null` for
+ * a bare attribute), so every attribute read goes through one of the
+ * first helpers below. A missing, oversized, or nonsense value degrades
+ * to a quiet default rather than throwing.
+ *
+ * `prep_quiz` is the one component here that reads a bound `data=` value,
+ * which a script produced and which can be anything at all, including a
+ * revoked `Proxy` or an object whose getters throw. The helpers at the
+ * bottom (`safeExtract`, `failureTitle`, `stateClassName`, `isUnreadable`)
+ * are the same shape `packs/dash` and `packs/track` use for that, so the
+ * three packs guard a binding the same way.
  */
 
 /**
@@ -71,4 +78,80 @@ export function oneOf<T extends string>(
   if (typeof raw !== 'string') return undefined;
   const trimmed = raw.trim();
   return (allowed as readonly string[]).includes(trimmed) ? (trimmed as T) : undefined;
+}
+
+/**
+ * Runs `read` — an extraction that touches an untrusted bound `data`
+ * value — and falls back to `fallback()` if any part of it throws. The
+ * whole extraction is wrapped rather than each property read, mirroring
+ * `@markii/react`'s internal `safeRead`: a value whose reads throw is
+ * unreadable as a whole, so a half-collected result would be arbitrary
+ * rather than useful. `read` must return only values derived from the
+ * bound data (strings, numbers, plain arrays of them), never the hostile
+ * object itself; `fallback` must not touch the bound value at all.
+ */
+export function safeExtract<T>(
+  read: () => T,
+  fallback: () => T,
+): { fields: T; fault?: string } {
+  try {
+    return { fields: read() };
+  } catch (err) {
+    return { fields: fallback(), fault: describeFault(err) };
+  }
+}
+
+/**
+ * Best-effort description of something host data threw, for the tooltip
+ * channel. Every step is itself guarded: `instanceof`, `.message`, and
+ * `String(...)` can all throw when the thrown value is a revoked `Proxy`
+ * or an object with hostile traps.
+ */
+function describeFault(err: unknown): string {
+  const generic = 'value store threw while reading this name';
+  try {
+    if (err instanceof Error && err.message !== '') return err.message;
+    const text = String(err);
+    return text === '' ? generic : text;
+  } catch {
+    return generic;
+  }
+}
+
+/**
+ * The tooltip text for a failed binding: the store's own error message
+ * when the run failed, otherwise the fault a hostile value produced
+ * during extraction. Never returns an empty string, so the result can go
+ * straight to `title=` without producing an empty tooltip.
+ */
+export function failureTitle(
+  error: string | undefined,
+  fault: string | undefined,
+): string | undefined {
+  const message = error ?? fault;
+  return message !== undefined && message !== '' ? message : undefined;
+}
+
+/**
+ * The class list for a data-bound component's root element: `base`, plus
+ * `--stale`/`--error` modifiers mirroring the reference components' status
+ * hooks, so a stylesheet can tint a binding that is not "fresh right now".
+ * Class names only — the visible body of the component never changes.
+ */
+export function stateClassName(
+  base: string,
+  status: string | undefined,
+): string {
+  if (status === 'stale') return `${base} ${base}--stale`;
+  if (status === 'error') return `${base} ${base}--error`;
+  return base;
+}
+
+/**
+ * Whether a binding is unreadable: the store never produced it ('missing')
+ * or the producing script failed ('error'). Both render the component's
+ * ordinary quiet empty state.
+ */
+export function isUnreadable(status: string | undefined): boolean {
+  return status === 'missing' || status === 'error';
 }

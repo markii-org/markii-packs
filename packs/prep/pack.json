@@ -41,6 +41,18 @@
         }
       ]
     },
+    "quiz": {
+      "source": "./quiz.tsx",
+      "description": "The questions a note already contains, collected by a script into one worked-through list with each answer behind a click-to-reveal region.",
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "data",
+          "description": "The bound quiz: an object with a questions array of {q, topic, level, answer}.",
+          "required": true
+        }
+      ]
+    },
     "pitfall": {
       "source": "./pitfall.tsx",
       "description": "A common-mistake callout with its own marker and accent, separate from the standard callout styling.",
