@@ -100,10 +100,8 @@ expected shape of the bound value for anything that reads `data=`. Copy
    directive name that does not match what `pack.json` declares, a
    component exported in a form the loader cannot find, or a form mismatch
    between how a component is written in the example (inline vs. block)
-   and the `kind` it declares. It must end with zero errors. Warnings are
-   read, not ignored: the one expected today is the unknown-key warning
-   for `attributes`, which the pinned `@markii/pack` does not understand
-   yet. Anything else in the warning list is yours to fix.
+   and the `kind` it declares. It must end with zero errors and zero
+   warnings.
 4. Open a pull request. CI runs the same `npm run check`.
 5. A maintainer reviews against the rules above. Acceptance adds your pack
    to the index in `README.md`.
