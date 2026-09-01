@@ -14,6 +14,7 @@ optionally follow one.
 | `:read_mark[]{}` | inline | A highlighter-style marker, tinted by kind. |
 
 ## `read_source`
+<img width="981" height="293" alt="image" src="https://github.com/user-attachments/assets/7dd157ba-837e-4013-8314-684b113dfa50" />
 
 ```markdown
 ::read_source{title="Gödel, Escher, Bach" author="Douglas Hofstadter" year="1979" type=book status=reading progress=40}
@@ -49,6 +50,7 @@ Bound data (`data=`): a finite number, or an object with a finite
 ```
 
 ## `read_quote`
+<img width="975" height="370" alt="image" src="https://github.com/user-attachments/assets/c10bee87-d89a-44e6-b6b3-2e206aadcf39" />
 
 ```markdown
 :::read_quote{source="Gödel, Escher, Bach" page="152" note="Worth rereading."}
@@ -74,6 +76,7 @@ that order, and is omitted entirely when none are. Each attribute is capped
 at a few hundred characters.
 
 ## `read_term`
+<img width="970" height="202" alt="image" src="https://github.com/user-attachments/assets/5684ea14-e7c7-4ea8-bbee-c5cb332dbc4b" />
 
 ```markdown
 :read_term[monad]{def="A type with a way to wrap a value and a way to chain operations that return wrapped values."}
@@ -89,6 +92,7 @@ Attributes:
 The directive's text is the term itself.
 
 ## `read_at`
+<img width="970" height="202" alt="image" src="https://github.com/user-attachments/assets/6c3a14fb-660c-435f-853b-f29d228bc1ee" />
 
 ```markdown
 :read_at[12:34]{href="https://example.com/watch?v=abc123"}
@@ -107,6 +111,7 @@ also what gets displayed, unchanged. An unparseable timestamp still
 displays and still links (just without `t`) if the `href` is safe.
 
 ## `read_mark`
+<img width="970" height="202" alt="image" src="https://github.com/user-attachments/assets/22c16133-2656-4a5f-a518-317b7e3c8375" />
 
 ```markdown
 Turing's paper reframes the Entscheidungsproblem as a question about
