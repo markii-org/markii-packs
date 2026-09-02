@@ -13,7 +13,15 @@
 //   - `manifestJson` is this pack's own `pack.json` content, verbatim;
 //   - `componentModules` has, for every LOCAL name `pack.json` declares, an
 //     own-property entry whose `component` is a function and whose
-//     `inline`, when present, is a boolean.
+//     `inline`, when present, is a boolean;
+//   - loading it leaves no global behind (the IIFE rule: the JSX shim and
+//     everything else the build needs stays inside the wrapper);
+//   - every registered component RENDERS through the real React set on
+//     `window.__markiiReact`, with empty attributes, without throwing. A
+//     component that registers but throws on render (a JSX shim scoped
+//     out of reach of the component modules did exactly that once,
+//     `__markiiJSX is not defined`, and left every note blank in Obsidian)
+//     is caught here rather than in a host.
 //
 // A contract change that breaks any of this — the register call dropped,
 // renamed, called with the wrong shape, or React read eagerly — fails
@@ -25,6 +33,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 import { packComponents } from '@markii/pack';
+import * as React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { buildPrebuiltPack } from './build-pack.mjs';
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -42,11 +52,12 @@ function ok(name, message) {
   console.log(`ok   ${name}: ${message}`);
 }
 
-/** Evaluates `js` in a fresh, isolated context with `window` set to `windowShape`. Returns nothing; throws whatever the script throws. */
+/** Evaluates `js` in a fresh, isolated context with `window` set to `windowShape`. Returns the names of globals the script left behind on that context; throws whatever the script throws. */
 function evaluate(js, windowShape) {
   const sandbox = { window: windowShape };
   vm.createContext(sandbox);
   vm.runInContext(js, sandbox, { timeout: 5000 });
+  return Object.keys(sandbox).filter((key) => key !== 'window');
 }
 
 async function checkPack(name, dir) {
@@ -70,14 +81,19 @@ async function checkPack(name, dir) {
     return;
   }
 
-  // The registration call itself, captured with a stub.
+  // The registration call itself, captured with a stub. The real React is
+  // set on the window the way a host does it, so the render pass below
+  // exercises the same lazy reads a host would.
   const calls = [];
+  let leaked = [];
+  const hostWindow = {
+    __markiiReact: React,
+    __markiiRegisterPack: (manifestJson, componentModules) => {
+      calls.push({ manifestJson, componentModules });
+    },
+  };
   try {
-    evaluate(js, {
-      __markiiRegisterPack: (manifestJson, componentModules) => {
-        calls.push({ manifestJson, componentModules });
-      },
-    });
+    leaked = evaluate(js, hostWindow);
   } catch (err) {
     fail(
       name,
@@ -91,6 +107,10 @@ async function checkPack(name, dir) {
     return;
   }
   const { manifestJson, componentModules } = calls[0];
+
+  if (leaked.length > 0) {
+    fail(name, `webview.js left global(s) behind: ${leaked.join(', ')}`);
+  }
 
   if (typeof manifestJson !== 'string') {
     fail(name, `manifestJson argument is not a string`);
@@ -136,9 +156,21 @@ async function checkPack(name, dir) {
     if (Object.hasOwn(entry, 'inline') && typeof entry.inline !== 'boolean') {
       fail(name, `componentModules["${localName}"].inline is present but not a boolean`);
     }
+    if (typeof entry.component === 'function') {
+      try {
+        renderToStaticMarkup(
+          React.createElement(entry.component, { attributes: {}, children: null }),
+        );
+      } catch (err) {
+        fail(
+          name,
+          `component "${localName}" threw while rendering through the prebuilt script: ${err instanceof Error ? err.message : String(err)}`,
+        );
+      }
+    }
   }
 
-  ok(name, `webview.js registers ${declared.length} component(s), lazy-React load is clean`);
+  ok(name, `webview.js registers ${declared.length} component(s), lazy-React load is clean, no globals leaked, every component renders`);
 }
 
 function discoverPacks() {

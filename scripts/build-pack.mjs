@@ -26,6 +26,7 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname, extname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import * as esbuild from 'esbuild';
 import { parsePackManifest, packComponents } from '@markii/pack';
 
@@ -108,18 +109,16 @@ function lazyGlobalModulePlugin() {
   };
 }
 
-// Written into `entrySource` itself (not passed as esbuild's `banner`
-// option): a `banner` is prepended OUTSIDE the `format: 'iife'` wrapper,
-// which would leave `__markiiJSX` as a real global — exactly what
-// docs/packs.md's "must not leave globals behind beyond the one call it
-// makes" rules out. Folded into the same source esbuild bundles, it stays
-// inside the wrapper along with everything else.
-const REACT_SHIM_SOURCE = [
-  'var __markiiJSX = {',
-  "  get createElement() { return (typeof window !== 'undefined' && window.__markiiReact || {}).createElement; },",
-  "  get Fragment() { return (typeof window !== 'undefined' && window.__markiiReact || {}).Fragment; },",
-  '};',
-].join('\n');
+// The JSX shim (`__markiiJSX`) is NOT written into the entry source and NOT
+// passed as esbuild's `banner`: a `banner` lands outside the `format: 'iife'`
+// wrapper and leaks a global, which docs/packs.md's "must not leave globals
+// behind beyond the one call it makes" rules out; a `var` in the entry
+// module is scoped to that module by esbuild and dropped as unused, so the
+// component modules' `__markiiJSX.createElement` calls throw a
+// ReferenceError at render time (that shipped once, as blank notes in
+// Obsidian). esbuild's `inject` option is the one mechanism that imports a
+// shared binding into every module that references it, inside the wrapper.
+const JSX_SHIM_PATH = join(dirname(fileURLToPath(import.meta.url)), 'jsx-shim.js');
 
 function orderedComponents(manifest, dir) {
   const result = [];
@@ -153,8 +152,6 @@ function entrySource(manifestRawText, components) {
 
   return [
     imports,
-    '',
-    REACT_SHIM_SOURCE,
     '',
     'function __markiiPick(mod) {',
     "  if (mod && typeof mod['default'] === 'function') return mod['default'];",
@@ -220,6 +217,7 @@ export async function buildPrebuiltPack(dirArg) {
     jsxFactory: '__markiiJSX.createElement',
     jsxFragment: '__markiiJSX.Fragment',
     tsconfigRaw: '{}',
+    inject: [JSX_SHIM_PATH],
     plugins: [lazyGlobalModulePlugin()],
     loader: { '.css': 'css' },
     logLevel: 'silent',
