@@ -10,8 +10,8 @@
   "devDependencies": {
     "typescript": "^5",
     "esbuild": "^0.28.2",
-    "@markii/pack": "^0.12.0",
-    "@markii/react": "^0.12.0",
+    "@markii/pack": "^0.13.0",
+    "@markii/react": "^0.13.0",
     "@types/react": "^18",
     "react": "^18",
     "react-dom": "^18"
