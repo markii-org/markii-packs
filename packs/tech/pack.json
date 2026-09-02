@@ -1,5 +1,6 @@
 {
   "name": "tech",
+  "version": "1.0.0",
   "engine": "react",
   "components": {
     "pane": {

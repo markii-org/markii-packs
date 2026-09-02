@@ -1,0 +1,34 @@
+/*
+ * `::schema_fact`, a static figure with a caption. No outer margin; the
+ * document owns vertical rhythm.
+ */
+
+.mk-schema_fact {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  padding: 0.5rem 0.75rem;
+  border-inline-start: 3px solid var(--mk-accent);
+  border-radius: 0 6px 6px 0;
+  background: var(--mk-surface);
+}
+
+.mk-schema_fact__value {
+  font-family: ui-monospace, monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--mk-fg);
+}
+
+.mk-schema_fact__label {
+  font-size: 0.78rem;
+  color: var(--mk-muted);
+}
+
+.mk-schema_fact__empty {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--mk-faint);
+}

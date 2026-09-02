@@ -1,0 +1,59 @@
+/*
+ * `::schema_col`, one column row inside a schema card. No outer margin; the
+ * schema body and the document own spacing.
+ */
+
+.mk-schema_col {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-block: 0.3rem;
+  border-block-end: 1px solid var(--mk-border);
+}
+
+.mk-schema_col:last-child {
+  border-block-end: none;
+}
+
+.mk-schema_col__name {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  color: var(--mk-fg);
+  background: none;
+  padding: 0;
+  border: none;
+}
+
+.mk-schema_col__name--placeholder {
+  font-family: inherit;
+  font-style: italic;
+  color: var(--mk-faint);
+}
+
+.mk-schema_col__pk {
+  flex: none;
+  padding: 0 0.35rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--mk-warning-ink);
+  background: var(--mk-warning-strong-fill);
+}
+
+.mk-schema_col__type {
+  flex: none;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--mk-muted);
+  background: var(--mk-surface-strong);
+}
+
+.mk-schema_col__note {
+  margin-inline-start: auto;
+  font-size: 0.78rem;
+  color: var(--mk-muted);
+}

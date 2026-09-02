@@ -1,0 +1,39 @@
+/*
+ * `:::schema_schema`, a schema card. No outer margin; the document owns
+ * vertical rhythm.
+ */
+
+.mk-schema_schema {
+  border: 1px solid var(--mk-border);
+  border-radius: 8px;
+  background: var(--mk-raised);
+  overflow: hidden;
+}
+
+.mk-schema_schema__head {
+  padding: 0.4rem 0.75rem;
+  background: var(--mk-surface);
+  border-block-end: 1px solid var(--mk-border);
+}
+
+.mk-schema_schema__name {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mk-fg);
+}
+
+.mk-schema_schema__name--placeholder {
+  font-family: inherit;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--mk-faint);
+}
+
+.mk-schema_schema__body {
+  padding: 0.25rem 0.75rem 0.5rem;
+}
+
+.mk-schema_schema__body > :first-child {
+  margin-block-start: 0;
+}

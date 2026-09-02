@@ -4,13 +4,14 @@
   "description": "Curated component packs for Markii.",
   "type": "module",
   "scripts": {
-    "check": "node scripts/validate.mjs && tsc --noEmit && node scripts/build-check.mjs && node scripts/render-check.mjs"
+    "check": "node scripts/validate.mjs && tsc --noEmit && node scripts/build-check.mjs && node scripts/register-check.mjs && node scripts/render-check.mjs",
+    "build:mkp": "node scripts/make-mkp.mjs"
   },
   "devDependencies": {
     "typescript": "^5",
     "esbuild": "^0.28.2",
-    "@markii/pack": "^0.11.0",
-    "@markii/react": "^0.11.0",
+    "@markii/pack": "^0.12.0",
+    "@markii/react": "^0.12.0",
     "@types/react": "^18",
     "react": "^18",
     "react-dom": "^18"

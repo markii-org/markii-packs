@@ -39,16 +39,16 @@ only runs in one, it is not ready.
   `title` tooltip, never a crash and never an error dump in the page. A
   bound value can be a revoked `Proxy` or an object whose getters throw, so
   run the whole extraction inside one try/catch and let only primitives out
-  of it. `packs/dash/guard.ts` is the shared pattern.
+  of it. `packs/track/guard.ts` is the shared pattern.
 - Manifest keys are bare component names, without the pack prefix.
-  `pack.json`'s `components` map uses the name inside the pack (`gauge`,
-  not `dash-gauge`); the host joins the pack name and the key with an
+  `pack.json`'s `components` map uses the name inside the pack (`streak`,
+  not `track-streak`); the host joins the pack name and the key with an
   underscore to build the directive. A key that already carries the prefix
   produces a directive nobody can type correctly.
 - Imports are limited to `react`, type-only imports from `@markii/react`,
   and the pack's own files. Nothing else.
-- Prefer one short word for a pack name. `dash_gauge` reads at a glance; a
-  long compound name is noisy every time someone types it.
+- Prefer one short word for a pack name. `track_streak` reads at a glance;
+  a long compound name is noisy every time someone types it.
 
 ## Required files per pack
 

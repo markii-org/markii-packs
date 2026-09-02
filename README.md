@@ -6,22 +6,30 @@ sheet. Point your editor at a pack's folder, type its prefixed directive,
 and the component renders in your notes.
 
 ```markdown
-::dash_gauge{value=72 label="CPU"}
+::track_streak{data=days weeks=12 label="Meditation"}
 ```
 
 ## Use a pack
 
-1. Download or clone this repository, or copy out the single folder under
-   `packs/` that you want.
-2. Tell your host where that folder is. In VS Code, add the path to the
-   `markii.packs` setting, which is read from your user settings only, so
-   opening someone else's project cannot install code on your behalf. In
-   Obsidian, add it to the plugin's pack folders, which are stored per
-   device rather than in the vault, so syncing a vault does not carry your
-   decisions about what may run.
-3. Write the directive. A pack component's name is the pack name, an
-   underscore, and the key from `pack.json`: pack `dash` plus component
-   `gauge` is `::dash_gauge`.
+How you install a pack depends on your host.
+
+In **VS Code**, either works. Clone or download this repository and add a
+pack's folder path to the `markii.packs` setting, which lives in your user
+settings only, so opening someone else's project cannot install code on
+your behalf. Or run "Markii: Install Pack from File…" and point it at a
+`.mkp` archive. Each release on this repository's GitHub releases page
+carries one `.mkp` per pack, so that command is the quickest way to add
+one without cloning anything.
+
+In **Obsidian**, a `.mkp` archive is the only way in: run "Install Markii
+pack from file" and pick the archive. Obsidian has no setting for pointing
+at an arbitrary folder on disk; the plugin manages installed packs itself,
+stored per device rather than in the vault, so syncing a vault never
+carries your decisions about what may run.
+
+Either way, once a pack is installed, write the directive. A pack
+component's name is the pack name, an underscore, and the key from
+`pack.json`: pack `track` plus component `streak` is `::track_streak`.
 
 [The pack contract](https://github.com/markii-org/markii/blob/main/docs/packs.md)
 in the main repository covers folder scanning, prefixed names, and the
@@ -32,16 +40,13 @@ directives and attributes, and an `example.mk.md` you can open directly.
 
 | Pack | Components |
 | --- | --- |
-| [dash](packs/dash/) | `sparkline`, `gauge`, `status`, `uptime`, `delta` |
 | [blog](packs/blog/) | `header`, `byline`, `pullquote`, `aside` |
 | [track](packs/track/) | `streak`, `ring`, `habits`, `log` |
 | [fin](packs/fin/) | `ticker`, `holdings`, `allocation` |
-| [read](packs/read/) | `source`, `quote`, `term`, `at`, `mark` |
 | [tech](packs/tech/) | `compare`, `pane`, `diff`, `method`, `status`, `verified`, `tradeoff`, `pros`, `cons` |
-| [prep](packs/prep/) | `q`, `topic`, `quiz`, `pitfall` |
-| [data](packs/data/) | `schema`, `col`, `pipeline`, `stage`, `fact` |
+| [schema](packs/schema/) | `schema`, `col`, `pipeline`, `stage`, `fact` |
 
-All eight are maintained by markii-org.
+All five are maintained by markii-org.
 
 ## Publish your own pack
 

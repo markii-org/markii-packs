@@ -1,5 +1,6 @@
 {
   "name": "fin",
+  "version": "1.0.0",
   "engine": "react",
   "components": {
     "ticker": {
