@@ -54,7 +54,12 @@ export function OutlineBranch({ attributes, children }: MarkComponentProps): Rea
 
   return (
     <details className="mk-outline_branch" open={startOpen}>
-      <summary className="mk-outline_branch__summary">
+      {/* `data-mk-interactive` matches @markii/stdlib's `INTERACTIVE_ATTRIBUTE`
+          (docs/integration.md's editor-host contract); written as a literal
+          because @markii/stdlib is not a dependency of this repo and, even
+          where it is, TypeScript only special-cases a literal `data-*` name
+          on a DOM intrinsic element. */}
+      <summary className="mk-outline_branch__summary" data-mk-interactive="">
         <RowContent
           icon={icon}
           num={num}

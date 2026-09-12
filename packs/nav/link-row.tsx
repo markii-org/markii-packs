@@ -137,8 +137,13 @@ export function LinkRow({
   );
 
   if (href !== undefined) {
+    // `data-mk-interactive` matches @markii/stdlib's `INTERACTIVE_ATTRIBUTE`
+    // (docs/integration.md's editor-host contract); written as a literal
+    // because @markii/stdlib is not a dependency of this repo and, even
+    // where it is, TypeScript only special-cases a literal `data-*` name on
+    // a DOM intrinsic element.
     return (
-      <a className="mk-nav_link" href={href} rel="noopener noreferrer" hidden={hidden}>
+      <a className="mk-nav_link" href={href} rel="noopener noreferrer" hidden={hidden} data-mk-interactive="">
         {inner}
       </a>
     );

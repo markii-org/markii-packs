@@ -187,7 +187,15 @@ async function renderCheckPack(name, dir) {
   }
 
   const componentModules = mod.__markiiEntries;
-  const registry = mergeRegistries(defaultRegistry, loadPack(manifest, componentModules));
+  const loaded = loadPack(manifest, componentModules);
+  if (loaded.dropped) {
+    hadError = true;
+    console.error(
+      `FAIL ${name}: pack declares engine "${loaded.dropped.engine}", which @markii/react cannot run`,
+    );
+    return;
+  }
+  const registry = mergeRegistries(defaultRegistry, loaded.registry);
 
   const exampleText = readFileSync(examplePath, 'utf8');
   let html;
