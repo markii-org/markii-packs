@@ -1,0 +1,111 @@
+/*
+ * `:::nav_group`, a card grouping a set of links under a heading. No
+ * outer margin; the index body or the document owns spacing between
+ * groups.
+ */
+
+.mk-nav_group {
+  border: 1px solid var(--mk-border);
+  border-radius: 8px;
+  background: var(--mk-raised);
+  overflow: hidden;
+}
+
+/* Overrides the block layout above for a hidden group: an author-origin rule beats the browser's own `[hidden]` default, so this has to be stated explicitly rather than assumed. */
+.mk-nav_group[hidden] {
+  display: none;
+}
+
+.mk-nav_group__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border-block-end: 1px solid var(--mk-border);
+  background: var(--mk-surface);
+}
+
+.mk-nav_group__icon-tile {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 6px;
+}
+
+.mk-nav_group__icon-tile svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mk-nav_group__heading {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.05rem;
+}
+
+.mk-nav_group__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mk-fg);
+}
+
+.mk-nav_group__title--placeholder {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--mk-faint);
+}
+
+.mk-nav_group__desc {
+  font-size: 0.75rem;
+  color: var(--mk-muted);
+}
+
+.mk-nav_group__body {
+  padding: 0.3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mk-nav_group__body > :first-child {
+  margin-block-start: 0;
+}
+
+/*
+ * Tone tints for the icon tile. Each tone derives its tile fill from the
+ * tone's own `--mk-*` token through `color-mix`, and strokes the glyph in
+ * that same token, so a tile is never a literal color and always follows
+ * the host theme in both light and dark.
+ */
+.mk-nav_group--accent .mk-nav_group__icon-tile {
+  background: color-mix(in srgb, var(--mk-accent) 14%, transparent);
+  color: var(--mk-accent);
+}
+
+.mk-nav_group--info .mk-nav_group__icon-tile {
+  background: color-mix(in srgb, var(--mk-info) 14%, transparent);
+  color: var(--mk-info);
+}
+
+.mk-nav_group--success .mk-nav_group__icon-tile {
+  background: color-mix(in srgb, var(--mk-success) 14%, transparent);
+  color: var(--mk-success);
+}
+
+.mk-nav_group--warning .mk-nav_group__icon-tile {
+  background: color-mix(in srgb, var(--mk-warning) 14%, transparent);
+  color: var(--mk-warning);
+}
+
+.mk-nav_group--danger .mk-nav_group__icon-tile {
+  background: color-mix(in srgb, var(--mk-danger) 14%, transparent);
+  color: var(--mk-danger);
+}
+
+.mk-nav_group--neutral .mk-nav_group__icon-tile {
+  background: color-mix(in srgb, var(--mk-muted) 14%, transparent);
+  color: var(--mk-muted);
+}

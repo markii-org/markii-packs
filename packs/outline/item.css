@@ -1,0 +1,16 @@
+/*
+ * `::outline_item`, a terminal row with no detail to expand. No outer
+ * margin; the tree or branch body it sits inside owns the spacing between
+ * rows.
+ */
+
+.mk-outline_item {
+  /*
+   * Same padding as `.mk-outline_branch__summary`, deliberately: an item
+   * and a branch are the same kind of row apart from the chevron, so
+   * their labels have to start on the same left edge.
+   */
+  display: flex;
+  align-items: center;
+  padding-block: 0.3rem;
+}

@@ -1,0 +1,102 @@
+/*
+ * `::nav_link`, one row: an optional icon, a label with an optional
+ * description under it, and an optional key-cap hint at the end. Rendered
+ * as an `<a>` when its `href` passes the scheme guard, otherwise as a
+ * plain `<div>` with the exact same layout, so a row's shape never
+ * changes just because it has nowhere to go. No outer margin; the group
+ * body or the document owns spacing between rows.
+ */
+
+.mk-nav_link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.mk-nav_link:hover,
+a.mk-nav_link:focus-visible {
+  background: var(--mk-surface-strong);
+}
+
+/* Overrides the flex layout above for a hidden row: an author-origin rule beats the browser's own `[hidden]` default, so this has to be stated explicitly rather than assumed. */
+.mk-nav_link[hidden] {
+  display: none;
+}
+
+.mk-nav_link__icon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--mk-muted);
+}
+
+.mk-nav_link__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  gap: 0.05rem;
+}
+
+.mk-nav_link__label {
+  /*
+   * Wraps rather than truncating. The label is the row's identity, so an
+   * ellipsis would hide the one thing a reader needs in a narrow pane;
+   * `overflow-wrap` only breaks a single unbroken token that would
+   * otherwise push the row wider than its card.
+   */
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.88rem;
+  color: var(--mk-fg);
+}
+
+.mk-nav_link__label--placeholder {
+  font-style: italic;
+  color: var(--mk-faint);
+}
+
+/*
+ * The description keeps the dense one-line shape the index is for, so it
+ * does truncate. It carries its own full text in a `title` (see
+ * `link-row.tsx`), which keeps the text reachable out of the flow rather
+ * than lost.
+ */
+.mk-nav_link__desc {
+  font-size: 0.76rem;
+  color: var(--mk-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*
+ * The marker for a row whose `href` was rejected by the scheme guard. Quiet
+ * and labeled, with the reason in its `title`: a dropped link is never
+ * silent, and never an error dump either.
+ */
+.mk-nav_link__unlinked {
+  flex: none;
+  padding: 0.1rem 0.4rem;
+  border: 1px dashed var(--mk-border);
+  border-radius: 4px;
+  color: var(--mk-faint);
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.mk-nav_link__key {
+  flex: none;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--mk-border);
+  border-radius: 4px;
+  background: var(--mk-surface);
+  color: var(--mk-muted);
+  font-family: ui-monospace, monospace;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}

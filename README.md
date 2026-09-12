@@ -45,8 +45,10 @@ directives and attributes, and an `example.mk.md` you can open directly.
 | [fin](packs/fin/) | `ticker`, `holdings`, `allocation` |
 | [tech](packs/tech/) | `compare`, `pane`, `diff`, `method`, `status`, `verified`, `tradeoff`, `pros`, `cons` |
 | [schema](packs/schema/) | `schema`, `col`, `pipeline`, `stage`, `fact` |
+| [outline](packs/outline/) | `tree`, `branch`, `item` |
+| [nav](packs/nav/) | `index`, `group`, `link` |
 
-All five are maintained by markii-org.
+All seven are maintained by markii-org.
 
 ## Publish your own pack
 

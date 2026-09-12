@@ -1,0 +1,62 @@
+/*
+ * Shared row contents used by `outline_branch`'s summary and by
+ * `outline_item`, so a row looks the same wherever it is written. No
+ * outer margin here either: the row sits inside whichever element the
+ * caller supplies, and that element owns the spacing rules, not this one.
+ */
+
+.mk-outline_row__contents {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.mk-outline_row__icon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--mk-muted);
+}
+
+.mk-outline_row__num {
+  flex: none;
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--mk-faint);
+}
+
+.mk-outline_row__label {
+  /*
+   * Wraps rather than truncating. A row label is note content, so an
+   * ellipsis would hide text a reader cannot get back in a narrow pane;
+   * `overflow-wrap` only breaks a single unbroken token that would
+   * otherwise push the row wider than its card.
+   */
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--mk-fg);
+}
+
+.mk-outline_row__label--placeholder {
+  font-style: italic;
+  color: var(--mk-faint);
+}
+
+.mk-outline_row__meta {
+  margin-inline-start: auto;
+  padding-inline-start: 0.5rem;
+  flex: none;
+  font-size: 0.78rem;
+  color: var(--mk-muted);
+  white-space: nowrap;
+}
+
+.mk-outline_row__chevron {
+  flex: none;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-inline-start: 0.35rem;
+  color: var(--mk-faint);
+  transition: transform 0.12s ease;
+}

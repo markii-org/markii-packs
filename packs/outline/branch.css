@@ -1,0 +1,42 @@
+/*
+ * `::::outline_branch`, an expandable row backed by native
+ * `<details>`/`<summary>`. No outer margin; the tree body (or a parent
+ * branch's body) owns the spacing between rows.
+ */
+
+.mk-outline_branch {
+  display: block;
+}
+
+.mk-outline_branch__summary {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+  padding-block: 0.3rem;
+  border-radius: 4px;
+}
+
+/* Removes the native marker so `RowContent`'s own chevron is the only one. */
+.mk-outline_branch__summary::-webkit-details-marker {
+  display: none;
+}
+
+.mk-outline_branch__summary:hover {
+  background: var(--mk-surface);
+}
+
+.mk-outline_branch[open] > .mk-outline_branch__summary .mk-outline_row__chevron {
+  transform: rotate(90deg);
+}
+
+.mk-outline_branch__body {
+  padding-block: 0.2rem 0.3rem;
+  padding-inline-start: 0.85rem;
+  margin-inline-start: 0.45rem;
+  border-inline-start: 1px solid var(--mk-border);
+}
+
+.mk-outline_branch__body > :first-child {
+  margin-block-start: 0;
+}

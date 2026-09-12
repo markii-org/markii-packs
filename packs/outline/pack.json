@@ -1,0 +1,76 @@
+{
+  "name": "outline",
+  "version": "1.0.0",
+  "engine": "react",
+  "components": {
+    "tree": {
+      "source": "./tree.tsx",
+      "description": "A titled card for a cascading outline, holding outline_branch and outline_item children.",
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "The always-visible section header. Without one (and no subtitle either) the header strip is omitted."
+        },
+        {
+          "name": "subtitle",
+          "description": "A muted line under the title."
+        }
+      ]
+    },
+    "branch": {
+      "source": "./branch.tsx",
+      "description": "An expandable row (native details/summary) that reveals a body of nested markdown or further outline_branch children.",
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The row title. Without one the row shows an 'untitled section' placeholder."
+        },
+        {
+          "name": "num",
+          "description": "A leading marker rendered verbatim, for example num=\"2.\" to include the dot."
+        },
+        {
+          "name": "meta",
+          "description": "Muted text at the end of the row."
+        },
+        {
+          "name": "icon",
+          "description": "A small glyph at the start of the row.",
+          "values": ["folder", "doc", "dot", "none"],
+          "default": "none"
+        },
+        {
+          "name": "open",
+          "description": "Starts the branch expanded. Written bare, for example {open}. Without it the branch starts collapsed."
+        }
+      ]
+    },
+    "item": {
+      "source": "./item.tsx",
+      "description": "A terminal row with no detail to expand, styled like an outline_branch's summary but without a chevron.",
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The row label, used when the directive has no bracket content. Bracket content wins when both are written."
+        },
+        {
+          "name": "num",
+          "description": "A leading marker rendered verbatim, for example num=\"2.\" to include the dot."
+        },
+        {
+          "name": "meta",
+          "description": "Muted text at the end of the row."
+        },
+        {
+          "name": "icon",
+          "description": "A small glyph at the start of the row.",
+          "values": ["folder", "doc", "dot", "none"],
+          "default": "none"
+        }
+      ]
+    }
+  }
+}
