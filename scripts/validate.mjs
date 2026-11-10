@@ -124,7 +124,7 @@ function scanCssSelectors(text, prefix, check) {
           walk(bodyStart, bodyEnd);
         }
         // @keyframes body holds percentage/from/to selectors, not element
-        // selectors — skipped entirely, on purpose.
+        // selectors: skipped entirely, on purpose.
       } else if (prelude) {
         for (const selector of splitTopLevelCommas(prelude)) {
           check(selector);
@@ -182,7 +182,7 @@ function validatePackFolder(folderName, dir) {
   }
 
   // Object form required (not the string shorthand @markii/pack itself still
-  // accepts), with a non-empty description and a valid kind — CONTRIBUTING.md
+  // accepts), with a non-empty description and a valid kind: CONTRIBUTING.md
   // requires all three for every component so reviewers can see the kind
   // stated plainly. Read straight off the raw parsed manifest, since a
   // string-form entry never reaches `components` above as an object.
@@ -208,16 +208,17 @@ function validatePackFolder(folderName, dir) {
   }
 
   for (const comp of components) {
-    if (!sourceResolvesInsidePack(dir, comp.source)) {
-      fail(
-        pack,
-        `component "${comp.localName}" source "${comp.source}" resolves outside the pack folder`,
-      );
-      continue;
-    }
-    const sourcePath = join(dir, comp.source);
-    if (!existsSync(sourcePath)) {
-      fail(pack, `component "${comp.localName}" source "${comp.source}" does not exist`);
+    for (const source of Object.values(comp.sources)) {
+      if (!sourceResolvesInsidePack(dir, source)) {
+        fail(
+          pack,
+          `component "${comp.localName}" source "${source}" resolves outside the pack folder`,
+        );
+        continue;
+      }
+      if (!existsSync(join(dir, source))) {
+        fail(pack, `component "${comp.localName}" source "${source}" does not exist`);
+      }
     }
   }
 
@@ -237,7 +238,7 @@ function validatePackFolder(folderName, dir) {
 
     // Selector scan: every selector in every rule (nested at-rule bodies
     // included, keyframe percentages excluded) must carry the pack's
-    // namespace somewhere in the chain — a bare `pre {}` or `p {}` is
+    // namespace somewhere in the chain: a bare `pre {}` or `p {}` is
     // exactly what this catches, since it has no `.mk-` prefix at all.
     scanCssSelectors(text, prefix, (selector) => {
       if (!selector.includes(prefix)) {

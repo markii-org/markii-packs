@@ -94,8 +94,9 @@ expected shape of the bound value for anything that reads `data=`. Copy
 2. Add your pack under `packs/<name>/`. Copy `template/` if that beats
    starting from an empty folder.
 3. Run `npm install`, then `npm run check`. That validates your manifest,
-   type-checks every component, confirms each one bundles, and renders your
-   pack's `example.mk.md` through the same registry a host builds at
+   type-checks every component, compiles each pack with the same compiler
+   the Markii authoring host uses (`@markii/pack-build`), loads the built
+   script, and renders your pack's `example.mk.md` through the same registry a host builds at
    install time. The render step catches what bundling alone cannot: a
    directive name that does not match what `pack.json` declares, a
    component exported in a form the loader cannot find, or a form mismatch

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Guards the registration contract in the main repo's docs/packs.md
 // ("What a prebuilt webview.js must do") against silent drift in
-// scripts/build-pack.mjs. For every pack (and the template), this builds
+// the shared compiler, @markii/pack-build,. For every pack (and the template), this builds
 // the prebuilt script and asserts, against a real evaluation of that
 // script (not a read of its source text), that:
 //
@@ -10,7 +10,7 @@
 //     function that runs at render time, never at load time);
 //   - it calls `window.__markiiRegisterPack(manifestJson, componentModules)`
 //     exactly once;
-//   - `manifestJson` is this pack's own `pack.json` content, verbatim;
+//   - `manifestJson` carries this pack's own `pack.json` content;
 //   - `componentModules` has, for every LOCAL name `pack.json` declares, an
 //     own-property entry whose `component` is a function and whose
 //     `inline`, when present, is a boolean;
@@ -23,23 +23,19 @@
 //     `__markiiJSX is not defined`, and left every note blank in Obsidian)
 //     is caught here rather than in a host.
 //
-// A contract change that breaks any of this — the register call dropped,
-// renamed, called with the wrong shape, or React read eagerly — fails
+// A contract change that breaks any of this: the register call dropped,
+// renamed, called with the wrong shape, or React read eagerly: fails
 // `npm run check` here rather than shipping a pack that loads and
 // registers nothing.
 
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { readFileSync } from 'node:fs';
+import { join, basename } from 'node:path';
 import vm from 'node:vm';
-import { packComponents } from '@markii/pack';
+import { isDeepStrictEqual } from 'node:util';
+import { packComponents, parsePackManifest } from '@markii/pack';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { buildPrebuiltPack } from './build-pack.mjs';
-
-const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
-const packsDir = join(rootDir, 'packs');
-const templateDir = join(rootDir, 'template');
+import { discover, compile } from './pack-tools.mjs';
 
 let hadError = false;
 
@@ -60,12 +56,12 @@ function evaluate(js, windowShape) {
   return Object.keys(sandbox).filter((key) => key !== 'window');
 }
 
-async function checkPack(name, dir) {
-  let js;
-  try {
-    ({ js } = await buildPrebuiltPack(dir));
-  } catch (err) {
-    fail(name, `failed to build prebuilt script: ${err instanceof Error ? err.message : String(err)}`);
+async function checkPack(pack) {
+  const name = pack.manifest.name;
+  const dir = pack.folder;
+  const { outcome, js } = await compile(pack);
+  if (outcome.kind !== 'built') {
+    fail(name, `failed to build prebuilt script: ${outcome.kind === 'failed' ? outcome.reason : 'nothing was built'}`);
     return;
   }
 
@@ -118,8 +114,18 @@ async function checkPack(name, dir) {
   }
 
   const rawManifestText = readFileSync(join(dir, 'pack.json'), 'utf8');
-  if (manifestJson !== rawManifestText) {
-    fail(name, `manifestJson does not match this pack's pack.json content verbatim`);
+  // docs/packs.md asks for the file's raw text. The shared compiler passes
+  // the parsed manifest re-serialized instead, so this compares parsed
+  // content: it must equal what @markii/pack parses out of the file.
+  let sameContent = false;
+  try {
+    const parsed = parsePackManifest(rawManifestText);
+    sameContent = parsed.ok && isDeepStrictEqual(JSON.parse(manifestJson), parsed.manifest);
+  } catch {
+    sameContent = false;
+  }
+  if (!sameContent) {
+    fail(name, `manifestJson does not carry this pack's pack.json content`);
   }
 
   let manifest;
@@ -130,8 +136,8 @@ async function checkPack(name, dir) {
     return;
   }
 
-  if (manifest.name !== name) {
-    fail(name, `registered manifest name "${manifest.name}" does not match pack "${name}"`);
+  if (manifest.name !== basename(dir)) {
+    fail(name, `registered manifest name "${manifest.name}" does not match its folder "${basename(dir)}"`);
   }
 
   if (componentModules === null || typeof componentModules !== 'object') {
@@ -173,25 +179,14 @@ async function checkPack(name, dir) {
   ok(name, `webview.js registers ${declared.length} component(s), lazy-React load is clean, no globals leaked, every component renders`);
 }
 
-function discoverPacks() {
-  if (!existsSync(packsDir)) return [];
-  return readdirSync(packsDir, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
-    .map((e) => e.name);
-}
+const { packs, skipped } = await discover();
+for (const s of skipped) fail(s.folder, s.reason);
 
-const packNames = discoverPacks();
-
-if (packNames.length === 0) {
+if (packs.length === 0 && skipped.length === 0) {
   console.log('no packs yet (packs/ is empty or missing)');
-} else {
-  for (const name of packNames) {
-    await checkPack(name, join(packsDir, name));
-  }
 }
-
-if (existsSync(templateDir) && statSync(templateDir).isDirectory()) {
-  await checkPack('template', templateDir);
+for (const pack of packs) {
+  await checkPack(pack);
 }
 
 if (hadError) {

@@ -58,8 +58,11 @@ of raw colors, and no throwing on bad data. [CONTRIBUTING.md](CONTRIBUTING.md)
 has the rules and the submission flow.
 
 To hand a pack to someone who is not going to clone a repository, VS Code's
-"Markii: Export Pack" command compiles it and writes the distributable
-folder somewhere else.
+"Markii: Export Pack" command compiles it and writes a `.mkp` archive.
+
+This repository builds its own archives with the published
+`@markii/pack-build` package, the same compiler behind that command.
+`npm run build:mkp` writes one `<name>-<version>.mkp` per pack into `dist/`.
 
 ## License
 
