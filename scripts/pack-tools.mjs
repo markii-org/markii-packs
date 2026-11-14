@@ -1,16 +1,20 @@
 // The one place this repository talks to the published Markii pack toolchain.
-// Discovery comes from @markii/host, compilation and archive export from
-// @markii/pack-build. The check scripts and build:mkp all go through here.
+// Manifests are validated with @markii/pack. Compilation and archive export
+// come from @markii/pack-build. The check scripts and build:mkp all go
+// through here.
 
 import { readdirSync, existsSync, statSync, readFileSync } from 'node:fs';
-import { readdir, readFile as readFileAsync } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { discoverPacks } from '@markii/host';
 import {
+  detectNamespaceCollisions,
+  packComponents,
+  packComponentsForEngine,
+  parsePackManifest,
+} from '@markii/pack';
+import {
+  buildPackArchive,
   buildPackRegistrationScript,
-  buildPackTerminalScript,
-  exportPackArchive,
 } from '@markii/pack-build';
 
 export const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -19,27 +23,6 @@ export const templateDir = join(rootDir, 'template');
 
 // Compiled scripts are cached here, never inside a pack's own folder.
 const cacheDir = join(rootDir, 'node_modules', '.cache', 'markii-packs');
-
-// Written here rather than taken from '@markii/host/node', whose entry
-// imports @markii/html at load time and would make it a dependency.
-const readFile = async (path) => {
-  try {
-    return await readFileAsync(path, 'utf8');
-  } catch {
-    return undefined;
-  }
-};
-
-const fsSeam = {
-  readFile,
-  listDirectory: async (dir) => {
-    try {
-      return await readdir(dir);
-    } catch {
-      return [];
-    }
-  },
-};
 
 /** Folder paths of every pack under packs/, plus the template when present. */
 export function packFolders({ includeTemplate = true } = {}) {
@@ -54,23 +37,62 @@ export function packFolders({ includeTemplate = true } = {}) {
   return folders;
 }
 
+/** Reads one pack folder into the shape the compiler takes, or a reason it is not a pack. */
+function readPack(folder) {
+  const manifestPath = join(folder, 'pack.json');
+  if (!existsSync(manifestPath)) return { reason: 'no readable pack.json' };
+  const manifestText = readFileSync(manifestPath, 'utf8');
+  const parsed = parsePackManifest(manifestText);
+  if (!parsed.ok) return { reason: `invalid pack.json (${parsed.errors.join('; ')})` };
+
+  const componentPaths = {};
+  for (const listing of packComponentsForEngine(parsed.manifest, 'react')) {
+    componentPaths[listing.localName] = join(folder, listing.source);
+  }
+  const componentPathsByEngine = {};
+  for (const listing of packComponents(parsed.manifest)) {
+    for (const [engine, source] of Object.entries(listing.sources)) {
+      (componentPathsByEngine[engine] ??= {})[listing.localName] = join(folder, source);
+    }
+  }
+  return {
+    pack: {
+      folder,
+      manifest: parsed.manifest,
+      manifestText,
+      componentPaths,
+      componentPathsByEngine,
+      scriptsDir: join(folder, 'scripts'),
+    },
+  };
+}
+
 /**
- * Discovers packs (manifest validated by @markii/pack). Returns
- * `{ packs, skipped, collisions }` as @markii/host reports them.
+ * Validates every pack folder. Returns `{ packs, skipped, collisions }`:
+ * the packs that validated and did not collide, the folders that did not
+ * (with a reason), and the namespaces claimed more than once.
  */
 export async function discover(options) {
-  return discoverPacks(
-    packFolders(options),
-    readFile,
-    async (dir) => {
-      try {
-        const entries = await readdir(dir, { withFileTypes: true });
-        return entries.map((e) => ({ name: e.name, isDirectory: e.isDirectory() }));
-      } catch {
-        return [];
-      }
-    },
+  const found = [];
+  const skipped = [];
+  for (const folder of packFolders(options)) {
+    const read = readPack(folder);
+    if (read.pack) found.push(read.pack);
+    else skipped.push({ folder, reason: read.reason });
+  }
+  const collisions = detectNamespaceCollisions(found.map((p) => p.manifest.name)).map(
+    (collision) => collision.namespace,
   );
+  const packs = found.filter((p) => !collisions.includes(p.manifest.name));
+  for (const pack of found) {
+    if (collisions.includes(pack.manifest.name)) {
+      skipped.push({
+        folder: pack.folder,
+        reason: `pack namespace "${pack.manifest.name}" collides with another pack`,
+      });
+    }
+  }
+  return { packs, skipped, collisions };
 }
 
 /** Compiles one pack. Returns `{ outcome, js, css }`; `js` is the registration script text when built. */
@@ -82,13 +104,13 @@ export async function compile(pack) {
   return { outcome, js, css };
 }
 
-/** Builds the `.mkp` bytes for one pack, including a terminal script when it declares `ansi` views. */
-export function archive(pack) {
-  return exportPackArchive({
-    pack,
-    cacheDir,
-    build: buildPackRegistrationScript,
-    buildTerminal: buildPackTerminalScript,
-    fs: fsSeam,
-  });
+/**
+ * Builds the `.mkp` bytes for one pack, including a terminal script when it
+ * declares `ansi` views. The result is `{ kind: 'built', packName, fileName,
+ * bytes, warnings }` or `{ kind: 'failed', packName, reason }`.
+ */
+export async function archive(pack) {
+  const packName = pack.manifest.name;
+  const result = await buildPackArchive(pack.folder, { cacheDir });
+  return { ...result, packName };
 }
