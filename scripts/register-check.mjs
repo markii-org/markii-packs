@@ -10,7 +10,7 @@
 //     function that runs at render time, never at load time);
 //   - it calls `window.__markiiRegisterPack(manifestJson, componentModules)`
 //     exactly once;
-//   - `manifestJson` carries this pack's own `pack.json` content;
+//   - `manifestJson` is this pack's own `pack.json` content, verbatim;
 //   - `componentModules` has, for every LOCAL name `pack.json` declares, an
 //     own-property entry whose `component` is a function and whose
 //     `inline`, when present, is a boolean;
@@ -31,8 +31,7 @@
 import { readFileSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import vm from 'node:vm';
-import { isDeepStrictEqual } from 'node:util';
-import { packComponents, parsePackManifest } from '@markii/pack';
+import { packComponents } from '@markii/pack';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { discover, compile } from './pack-tools.mjs';
@@ -114,18 +113,8 @@ async function checkPack(pack) {
   }
 
   const rawManifestText = readFileSync(join(dir, 'pack.json'), 'utf8');
-  // docs/packs.md asks for the file's raw text. The shared compiler passes
-  // the parsed manifest re-serialized instead, so this compares parsed
-  // content: it must equal what @markii/pack parses out of the file.
-  let sameContent = false;
-  try {
-    const parsed = parsePackManifest(rawManifestText);
-    sameContent = parsed.ok && isDeepStrictEqual(JSON.parse(manifestJson), parsed.manifest);
-  } catch {
-    sameContent = false;
-  }
-  if (!sameContent) {
-    fail(name, `manifestJson does not carry this pack's pack.json content`);
+  if (manifestJson !== rawManifestText) {
+    fail(name, `manifestJson does not match this pack's pack.json content verbatim`);
   }
 
   let manifest;
