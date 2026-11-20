@@ -1,14 +1,16 @@
 # nav
 
-A command-style index for the links you keep coming back to: a searchable
-list of grouped or loose rows, each with an icon, a label, a description,
-and a keyboard hint.
+Getting around a set of notes: a command-style index of searchable, grouped
+links with icons and keyboard hints, plus links between pages, a back line
+and a next or previous card.
 
 | Directive | Form | Description |
 | --- | --- | --- |
 | `::::nav_index{}` | container | A filterable frame holding `nav_group` and `nav_link` children. |
 | `:::nav_group{}` | container | A card grouping `nav_link` rows under a heading. |
 | `::nav_link[]{}` | leaf | One row: icon, label, description, key-cap hint, and an optional link. |
+| `::nav_back[]{}` | leaf | A quiet line linking back to a parent page. |
+| `:::nav_card{}` | container | A card linking to the next or previous page, with an optional still. |
 
 Write the directives in the form their `kind` requires: `::nav_link[text]{attrs}`
 for the leaf, and a fenced block for the two containers. A `nav_group`
@@ -135,3 +137,62 @@ than one place.
 
 This component is not data-bound; every value is typed into the note by
 hand.
+
+## `nav_back`
+
+```markdown
+::nav_back[[Projects](../projects)]
+```
+
+One quiet line: a back arrow, a muted label, then the link. The link is
+ordinary markdown in the brackets, so it behaves like any other link in the
+note. With no link in the brackets the line still renders, with a tooltip
+saying so.
+
+- `label` (string, default `Back to`): the muted text before the link.
+
+## `nav_card`
+
+```markdown
+:::nav_card{img="images/thumb.webp"}
+[Markii](markii.mk.md)
+
+Markdown that renders your own components, with live data.
+:::
+```
+
+A card that links to another page. The first paragraph holds the link and
+is shown as the page name. Anything after it is a muted preview of one or
+two lines. The whole card is the link: the first link in the first
+paragraph is stretched over the card, so the card has one tab stop. Other
+links in the preview stay clickable.
+
+- `label` (string, default `Next`, or `Previous` when `dir` is `back`): the
+  small text above the page name.
+- `img` (string, optional): a still. Only `http:`, `https:` and relative
+  addresses are accepted. Anything else is left out and the card carries a
+  tooltip saying so.
+- `dir` (`next` or `back`, default `next`): which way the link points. The
+  still takes half the card at the end the link points to. Any other value
+  reads as `next`.
+
+Below about 30rem of card width the still sits above the text. With no link
+in the content the card still renders, with a tooltip saying so.
+
+Two cards side by side use the standard layout. In a two-column row each
+card is usually narrower than 30rem, so both show their still on top:
+
+```markdown
+::::row{cols=2}
+:::nav_card{dir=back}
+[Setup](setup.mk.md)
+
+Install and first note.
+:::
+:::nav_card
+[Scripting](scripting.mk.md)
+
+Bind a value, run Lua.
+:::
+::::
+```

@@ -45,7 +45,7 @@ interface IconSpec {
  * and would throw. Building the `<path>` inside `Icon()` instead means
  * nothing here runs until a component actually renders.
  */
-const ICON_PATHS: Record<Exclude<IconName, 'none'>, IconSpec> = {
+const ICON_PATHS: Record<Exclude<IconName, 'none'> | 'back', IconSpec> = {
   home: { d: 'M2 8 L8 2.5 L14 8 M4 6.8 V14 H12 V6.8', strokeLinecap: 'round', strokeLinejoin: 'round' },
   doc: { d: 'M4 1.5 H10 L12.5 4 V14.5 H4 Z M10 1.5 V4 H12.5', strokeLinecap: 'round', strokeLinejoin: 'round' },
   book: {
@@ -62,6 +62,8 @@ const ICON_PATHS: Record<Exclude<IconName, 'none'>, IconSpec> = {
     strokeLinejoin: 'round',
   },
   arrow: { d: 'M2 8 H13 M8.5 3.5 L13 8 L8.5 12.5', strokeLinecap: 'round', strokeLinejoin: 'round' },
+  // The mirror of `arrow`. Drawn only for `nav_back` and `nav_card`, never offered as an `icon=` value.
+  back: { d: 'M14 8 H3 M7.5 3.5 L3 8 L7.5 12.5', strokeLinecap: 'round', strokeLinejoin: 'round' },
 };
 
 /**
@@ -71,8 +73,8 @@ const ICON_PATHS: Record<Exclude<IconName, 'none'>, IconSpec> = {
  * could hand this component any string, and an unrecognized icon should
  * quietly disappear rather than render a broken shape.
  */
-export function Icon({ name, className }: { name: IconName; className?: string }): ReactElement | null {
-  const spec = ICON_PATHS[name as Exclude<IconName, 'none'>];
+export function Icon({ name, className }: { name: IconName | 'back'; className?: string }): ReactElement | null {
+  const spec = ICON_PATHS[name as Exclude<IconName, 'none'> | 'back'];
   if (spec === undefined) return null;
   return (
     <svg

@@ -74,6 +74,40 @@
           "default": "none"
         }
       ]
+    },
+    "back": {
+      "source": "./back.tsx",
+      "description": "One quiet line linking back to a parent page: an arrow, a muted label, then a markdown link.",
+      "kind": "leaf",
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The muted text before the link.",
+          "default": "Back to"
+        }
+      ]
+    },
+    "card": {
+      "source": "./card.tsx",
+      "description": "A card linking to another page: a label, the page name, a short preview, and an optional still.",
+      "kind": "container",
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The small text above the page name. Defaults to Previous when dir is back.",
+          "default": "Next"
+        },
+        {
+          "name": "img",
+          "description": "An optional still. Only http(s) and relative addresses are accepted; anything else is left out and the card shows a quiet note."
+        },
+        {
+          "name": "dir",
+          "description": "Which way the link points. The still sits at the end the link points to.",
+          "values": ["next", "back"],
+          "default": "next"
+        }
+      ]
     }
   }
 }

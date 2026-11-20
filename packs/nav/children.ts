@@ -212,3 +212,33 @@ function collectText(node: ReactNode, depth: number, state: TextCollectState): v
     }
   });
 }
+
+/** How deep `hasAnchor` descends looking for a link. */
+const MAX_ANCHOR_WALK_DEPTH = 8;
+
+/**
+ * Whether the pre-rendered content holds a link: an element whose type is
+ * `a`, or one that carries an `href` prop. Depth-capped. Never throws: a
+ * hostile tree reads as "no link", which the caller shows as a quiet title.
+ */
+export function hasAnchor(node: ReactNode): boolean {
+  try {
+    return anchorIn(node, MAX_ANCHOR_WALK_DEPTH);
+  } catch {
+    return false;
+  }
+}
+
+function anchorIn(node: ReactNode, depth: number): boolean {
+  if (node === null || node === undefined || typeof node === 'boolean') return false;
+  let found = false;
+  Children.forEach(node, (child) => {
+    if (found || !isValidElement<{ href?: unknown; children?: ReactNode }>(child)) return;
+    if (child.type === 'a' || typeof child.props.href === 'string') {
+      found = true;
+      return;
+    }
+    if (depth > 0 && anchorIn(child.props.children, depth - 1)) found = true;
+  });
+  return found;
+}

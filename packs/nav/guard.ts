@@ -192,3 +192,52 @@ export function safeHref(raw: unknown): string | undefined {
   const scheme = trimmed.slice(0, colon).toLowerCase();
   return SAFE_HREF_SCHEMES.has(scheme) ? trimmed : undefined;
 }
+
+/**
+ * Checks an image source for the `nav_card` still. Authored values (what a
+ * note wrote in `img=`) pass only as an `http:` or `https:` address or a
+ * scheme-less relative path. Everything else is refused: `mailto:`, `data:`,
+ * `javascript:`, any other scheme, and any value with a control character,
+ * in any letter case. Returns the trimmed source, or `undefined` to refuse.
+ */
+export function safeImageSrc(raw: unknown): string | undefined {
+  const href = safeHref(raw);
+  if (href === undefined) return undefined;
+  const colon = href.indexOf(':');
+  if (colon === -1) return href;
+  const slash = href.indexOf('/');
+  const question = href.indexOf('?');
+  const hash = href.indexOf('#');
+  const isScheme =
+    (slash === -1 || colon < slash) &&
+    (question === -1 || colon < question) &&
+    (hash === -1 || colon < hash);
+  if (!isScheme) return href;
+  const scheme = href.slice(0, colon).toLowerCase();
+  return scheme === 'http' || scheme === 'https' ? href : undefined;
+}
+
+const REFUSED_RESOLVED_SCHEMES = new Set(['javascript', 'vbscript', 'data']);
+
+/**
+ * Checks what a host's image resolver handed back. A host maps a relative
+ * path onto its own address space (a webview or app resource address), so
+ * the allowlist for authored values does not apply here. Script and inline
+ * data schemes, and control characters, are still refused.
+ */
+export function safeResolvedImageSrc(raw: unknown): string | undefined {
+  if (typeof raw !== 'string' || raw.length > MAX_HREF_LENGTH) return undefined;
+  const trimmed = trimSpaceAndControl(raw);
+  if (trimmed === '' || hasControlChar(trimmed)) return undefined;
+  const colon = trimmed.indexOf(':');
+  if (colon === -1) return trimmed;
+  const slash = trimmed.indexOf('/');
+  const question = trimmed.indexOf('?');
+  const hash = trimmed.indexOf('#');
+  const isScheme =
+    (slash === -1 || colon < slash) &&
+    (question === -1 || colon < question) &&
+    (hash === -1 || colon < hash);
+  if (!isScheme) return trimmed;
+  return REFUSED_RESOLVED_SCHEMES.has(trimmed.slice(0, colon).toLowerCase()) ? undefined : trimmed;
+}

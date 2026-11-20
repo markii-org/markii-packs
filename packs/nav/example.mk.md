@@ -46,3 +46,40 @@ The deploy checklist link above has no `href` yet: it still shows in the
 list, description and all, just without anything to click until someone
 writes it. The style guide link uses a `mailto:` address, which passes the
 same scheme check as a plain `http(s)` link.
+
+## Between pages
+
+A line back to the parent page:
+
+::nav_back[[Team wiki](../wiki)]
+
+A card with a still, pointing on to the next page:
+
+:::nav_card{img="https://picsum.photos/id/1015/640/400"}
+[Release process](/wiki/eng/release)
+
+How a change gets from a branch to production, with the checklist we use.
+:::
+
+A card with no still takes the full width:
+
+:::nav_card{label="Up next"}
+[Incident runbook](/wiki/eng/incidents)
+
+What to do when paged.
+:::
+
+Previous and next side by side. Each card is narrow here, so its still sits on top:
+
+::::row{cols=2}
+:::nav_card{dir=back img="https://picsum.photos/id/1016/640/400"}
+[Architecture overview](/wiki/eng/architecture)
+
+The big picture.
+:::
+:::nav_card{img="https://picsum.photos/id/1018/640/400"}
+[Data pipeline](/wiki/eng/pipeline)
+
+Ingest through modeling.
+:::
+::::

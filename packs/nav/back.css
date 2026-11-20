@@ -1,0 +1,31 @@
+/*
+ * `::nav_back`, a one-line link to the parent page. No border, no box, no
+ * outer margin.
+ */
+
+.mk-nav_back {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.9em;
+}
+
+.mk-nav_back__icon {
+  flex: none;
+  align-self: center;
+  width: 1rem;
+  height: 1rem;
+  color: var(--mk-muted);
+}
+
+.mk-nav_back:dir(rtl) .mk-nav_back__icon {
+  transform: scaleX(-1);
+}
+
+.mk-nav_back__label {
+  color: var(--mk-muted);
+}
+
+.mk-nav_back__target a:hover {
+  text-decoration-thickness: 2px;
+}

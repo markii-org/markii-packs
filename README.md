@@ -46,7 +46,7 @@ directives and attributes, and an `example.mk.md` you can open directly.
 | [tech](packs/tech/) | `compare`, `pane`, `diff`, `method`, `status`, `verified`, `tradeoff`, `pros`, `cons` |
 | [schema](packs/schema/) | `schema`, `col`, `pipeline`, `stage`, `fact` |
 | [outline](packs/outline/) | `tree`, `branch`, `item` |
-| [nav](packs/nav/) | `index`, `group`, `link` |
+| [nav](packs/nav/) | `index`, `group`, `link`, `back`, `card` |
 
 All seven are maintained by markii-org.
 
