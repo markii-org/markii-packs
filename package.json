@@ -8,9 +8,9 @@
     "build:mkp": "node scripts/make-mkp.mjs"
   },
   "devDependencies": {
-    "@markii/pack": "0.17.0-next.6",
-    "@markii/pack-build": "0.17.0-next.6",
-    "@markii/react": "0.17.0-next.6",
+    "@markii/pack": "0.18.1",
+    "@markii/pack-build": "0.18.1",
+    "@markii/react": "0.18.1",
     "@types/react": "^18",
     "react": "^18",
     "react-dom": "^18",
